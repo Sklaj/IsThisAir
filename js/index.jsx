@@ -14,9 +14,11 @@ import {
 // import MapApp from './mapapp.jsx'
 //
 // //Importing functions
-import Locate from './getLocation';
+import locate from './getLocation.js';
 import getCities from './getCities.js';
-
+import getDistance from './getDistance.js'
+//Google API KEy
+let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -50,9 +52,7 @@ document.addEventListener('DOMContentLoaded', function(){
         super(props);
         this.state={
           inputValue:'',
-          cityList:{
-
-          }
+          cityList:{}
         }
       }
 
@@ -62,36 +62,32 @@ document.addEventListener('DOMContentLoaded', function(){
 
       submitHandler = (e) => {
 
-        console.log('działa')
+        for(let i=0; i < this.state.cityList.length; i++){
 
-        for(let i; i < this.state.cityList.length; i++){
-          if(this.state.inputValue === this.state.cityList[i].city.name){
-            console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
-            console.log('ID Miasta:' + this.state.cityList[i].city.id)
-            console.log('ID Stacji:' + this.state.cityList[i].id)
-          }else {
-            console.log('Nie ma takiego miasta')
+          if(this.state.cityList[i].city){
+            if(this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()){
+              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
+              console.log('ID Miasta:' + this.state.cityList[i].city.id)
+              console.log('ID Stacji:' + this.state.cityList[i].id)
+              console.log('lat: ' + this.state.cityList[i].gegrLat)
+              console.log('lat: ' + this.state.cityList[i].gegrLon)
+            } else {
+                console.log('To nie to miasto!')
+            }
           }
         }
-        // console.log(this.state.cityList)
-
-        // for(let i; i < this.state.cityList.length; i++){
-        //   console.log(this.state.cityList[i].city.name)
-        // }
-        //   for(var i = 0; i < this.state.cityList.length; i++){
-        //     if(this.state.cityList[i].city == null){
-        //       console.log("PUSTY REKORD..............." + i)
-        //     } else {
-        //       console.log(
-        //         this.state.cityList[i].city.name
-        //       )
-        //     }
-        //   }
       }
 
-      changeHandler = (e) => {
-        this.setState({inputValue:e.target.value})
-        console.log(this.state.inputValue)
+      handleKeyPress = (event) => {
+        if(event.key == 'Enter'){
+          this.submitHandler()
+        }
+      }
+
+      onFieldChange(e){
+        const fieldValue = e.target.value;
+        const fieldName = e.target.name;
+        this.props.changeHandler(fieldName,fieldValue);
       }
 
       render(){
@@ -102,7 +98,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 type="text"
                 placeholder='wyszukaj swoje miasto'
                 className="search_input"
-                onChange={this.changeHandler}
+                onChange={this.onFieldChange.bind(this)}
+                onKeyPress={this.handleKeyPress}
+                name='Dupa'
                 value={this.state.inputValue}
               />
               <input
@@ -119,9 +117,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
     class Localize extends React.Component{
 
+      constructor(props){
+        super(props);
+        this.state = {
+          pos:{
+
+          }
+        }
+      }
+
+      componentDidMount(){
+        locate(this);
+      }
+
       localizationHandler = () => {
-        // Locate();
-        // getCities()
+        console.log(this.state.pos)
       }
 
       render(){
@@ -129,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function(){
           <div className="row localize_row">
             <div className="container localize">
               <p>Lub zlokalizuj się akutomatycznie</p>
-                <Link to='#'>
+                {/* <Link to='#'> */}
                   <button
                     type="button"
                     name="button"
@@ -137,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     >
                       Zlokalizuj mnie
                     </button>
-                  </Link>
+                  {/* </Link> */}
 
 
             </div>
@@ -152,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function(){
           <div className="row">
             <div className="container footer">
               <footer>
-                ©Piotrek Chodkowski
+                  Aplikacja dziala tylko na terenie polski ©Piotrek Chodkowski
               </footer>
             </div>
           </div>
@@ -162,12 +172,32 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
     class Home extends React.Component{
+
+      constructor(props){
+        super(props);
+        this.state = {
+          inputValue:{}
+        }
+      }
+
+      changeHandler = (fieldName, fieldValue) => {
+        this.setState({fieldName: fieldValue})
+        console.log(fieldName.target.value)
+      }
+
+      componentDidMount(){
+        getCities(this);
+        getDistance()
+      }
+
       render(){
         return(
           <div>
             <Logo/>
             <Heading/>
-            <Search/>
+            <Search
+              changeHandler={this.changeHandler.bind(this)}
+            />
             <Localize/>
             <Footer/>
           </div>
@@ -189,7 +219,6 @@ document.addEventListener('DOMContentLoaded', function(){
           </div>
         )
       }
-
     }
 
     ReactDOM.render(

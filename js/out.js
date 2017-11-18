@@ -13578,8 +13578,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getLocation__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getLocation_js__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getCities_js__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__getDistance_js__ = __webpack_require__(244);
 //Importing React
 
 
@@ -13591,6 +13592,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // //Importing functions
 
 
+
+//Google API KEy
+let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -13633,36 +13637,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
       this.submitHandler = e => {
 
-        console.log('działa');
+        for (let i = 0; i < this.state.cityList.length; i++) {
 
-        for (let i; i < this.state.cityList.length; i++) {
-          if (this.state.inputValue === this.state.cityList[i].city.name) {
-            console.log('Nazwa Miasta:' + this.state.cityList[i].city.name);
-            console.log('ID Miasta:' + this.state.cityList[i].city.id);
-            console.log('ID Stacji:' + this.state.cityList[i].id);
-          } else {
-            console.log('Nie ma takiego miasta');
+          if (this.state.cityList[i].city) {
+            if (this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()) {
+              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name);
+              console.log('ID Miasta:' + this.state.cityList[i].city.id);
+              console.log('ID Stacji:' + this.state.cityList[i].id);
+              console.log('lat: ' + this.state.cityList[i].gegrLat);
+              console.log('lat: ' + this.state.cityList[i].gegrLon);
+            } else {
+              console.log('To nie to miasto!');
+            }
           }
         }
-        // console.log(this.state.cityList)
-
-        // for(let i; i < this.state.cityList.length; i++){
-        //   console.log(this.state.cityList[i].city.name)
-        // }
-        //   for(var i = 0; i < this.state.cityList.length; i++){
-        //     if(this.state.cityList[i].city == null){
-        //       console.log("PUSTY REKORD..............." + i)
-        //     } else {
-        //       console.log(
-        //         this.state.cityList[i].city.name
-        //       )
-        //     }
-        //   }
       };
 
-      this.changeHandler = e => {
-        this.setState({ inputValue: e.target.value });
-        console.log(this.state.inputValue);
+      this.handleKeyPress = event => {
+        if (event.key == 'Enter') {
+          this.submitHandler();
+        }
       };
 
       this.state = {
@@ -13673,6 +13667,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     componentDidMount() {
       Object(__WEBPACK_IMPORTED_MODULE_4__getCities_js__["a" /* default */])(this);
+    }
+
+    onFieldChange(e) {
+      const fieldValue = e.target.value;
+      const fieldName = e.target.name;
+      this.props.changeHandler(fieldName, fieldValue);
     }
 
     render() {
@@ -13686,7 +13686,9 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'text',
             placeholder: 'wyszukaj swoje miasto',
             className: 'search_input',
-            onChange: this.changeHandler,
+            onChange: this.onFieldChange.bind(this),
+            onKeyPress: this.handleKeyPress,
+            name: 'Dupa',
             value: this.state.inputValue
           }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
@@ -13701,13 +13703,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   class Localize extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-    constructor(...args) {
-      var _temp;
 
-      return _temp = super(...args), this.localizationHandler = () => {
-        // Locate();
-        // getCities()
-      }, _temp;
+    constructor(props) {
+      super(props);
+
+      this.localizationHandler = () => {
+        console.log(this.state.pos);
+      };
+
+      this.state = {
+        pos: {}
+      };
+    }
+
+    componentDidMount() {
+      Object(__WEBPACK_IMPORTED_MODULE_3__getLocation_js__["a" /* default */])(this);
     }
 
     render() {
@@ -13723,17 +13733,13 @@ document.addEventListener('DOMContentLoaded', function () {
             'Lub zlokalizuj si\u0119 akutomatycznie'
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_2_react_router__["b" /* Link */],
-            { to: '#' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'button',
-              {
-                type: 'button',
-                name: 'button',
-                onClick: this.localizationHandler
-              },
-              'Zlokalizuj mnie'
-            )
+            'button',
+            {
+              type: 'button',
+              name: 'button',
+              onClick: this.localizationHandler
+            },
+            'Zlokalizuj mnie'
           )
         )
       );
@@ -13751,7 +13757,7 @@ document.addEventListener('DOMContentLoaded', function () {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'footer',
             null,
-            '\xA9Piotrek Chodkowski'
+            'Aplikacja dziala tylko na terenie polski \xA9Piotrek Chodkowski'
           )
         )
       );
@@ -13759,13 +13765,34 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   class Home extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+
+    constructor(props) {
+      super(props);
+
+      this.changeHandler = (fieldName, fieldValue) => {
+        this.setState({ fieldName: fieldValue });
+        console.log(fieldName.target.value);
+      };
+
+      this.state = {
+        inputValue: {}
+      };
+    }
+
+    componentDidMount() {
+      Object(__WEBPACK_IMPORTED_MODULE_4__getCities_js__["a" /* default */])(this);
+      Object(__WEBPACK_IMPORTED_MODULE_5__getDistance_js__["a" /* default */])();
+    }
+
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Logo, null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Heading, null),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Search, null),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Search, {
+          changeHandler: this.changeHandler.bind(this)
+        }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Localize, null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Footer, null)
       );
@@ -13778,17 +13805,16 @@ document.addEventListener('DOMContentLoaded', function () {
         'div',
         { className: 'wrapper' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_2_react_router__["d" /* Router */],
-          { history: __WEBPACK_IMPORTED_MODULE_2_react_router__["e" /* hashHistory */] },
+          __WEBPACK_IMPORTED_MODULE_2_react_router__["c" /* Router */],
+          { history: __WEBPACK_IMPORTED_MODULE_2_react_router__["d" /* hashHistory */] },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_2_react_router__["c" /* Route */],
+            __WEBPACK_IMPORTED_MODULE_2_react_router__["b" /* Route */],
             { path: '/', component: Home },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["a" /* IndexRoute */], { component: Home })
           )
         )
       );
     }
-
   }
 
   __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(App, null), document.getElementById('app'));
@@ -24835,9 +24861,9 @@ module.exports = ReactDOMInvalidARIAHook;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Router__ = __webpack_require__(216);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_0__Router__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_0__Router__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Link__ = __webpack_require__(107);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_1__Link__["a"]; });
+/* unused harmony reexport Link */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__IndexLink__ = __webpack_require__(224);
 /* unused harmony reexport IndexLink */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__withRouter__ = __webpack_require__(225);
@@ -24849,7 +24875,7 @@ module.exports = ReactDOMInvalidARIAHook;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Redirect__ = __webpack_require__(108);
 /* unused harmony reexport Redirect */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Route__ = __webpack_require__(229);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_7__Route__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__RouteUtils__ = __webpack_require__(19);
 /* unused harmony reexport createRoutes */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__RouterContext__ = __webpack_require__(64);
@@ -24868,7 +24894,7 @@ module.exports = ReactDOMInvalidARIAHook;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__browserHistory__ = __webpack_require__(236);
 /* unused harmony reexport browserHistory */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__hashHistory__ = __webpack_require__(239);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_16__hashHistory__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_16__hashHistory__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__createMemoryHistory__ = __webpack_require__(109);
 /* unused harmony reexport createMemoryHistory */
 /* components */
@@ -27223,30 +27249,27 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export default */
+/* harmony export (immutable) */ __webpack_exports__["a"] = locate;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
 //Geolocation
 
-function Locate() {
+function locate(a) {
+  console.log('dupaaaa');
 
-  let pos = {
-    lat: 0,
-    long: 0
-  };
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-      console.log('brak lokalizacji');
-    }
-    function showPosition(position) {
-      pos.lat = position.coords.latitude;
-      pos.long = position.coords.longitude;
-      console.log(pos.lat);
-      console.log(pos.long);
-      return pos;
-    };
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    console.log('ddddd');
+  } else {
+    console.log('brak lokalizacji');
   }
+
+  function showPosition(position) {
+    a.setState({ pos: { lat: position.coords.latitude, long: position.coords.longitude } });
+    console.log(position.coords.latitude);
+    console.log(position.coords.longitude);
+  };
 };
 
 /***/ }),
@@ -27293,6 +27316,44 @@ function getCities(a) {
   //     }
   //   }
   // })
+};
+
+/***/ }),
+/* 244 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = getDistance;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+//Getting Cities list
+function getDistance(a, start, end) {
+
+  let mode = { mode: 'cors',
+    method: 'GET'
+  };
+  let startPoint = {
+    lat: 52.230381799999996,
+    lon: 20.9877956
+  };
+  let endPoint = {
+    lat: 52.225157,
+    lon: 21.014803
+  };
+  let preLink = 'https://cors-anywhere.herokuapp.com/';
+  let link = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=`;
+  let destLink = startPoint.lat + ',' + startPoint.lon + '&destinations=' + endPoint.lat + ',' + endPoint.lon + '&key=';
+  let apiKey = 'AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM';
+
+  fetch(preLink + link + destLink + apiKey, mode).then(function (response) {
+    return response.json();
+  }).then(function (json) {
+    console.log('parsed json', json);
+  }).catch(function (err) {
+    console.log('parsing failed', err);
+  });
 };
 
 /***/ })
