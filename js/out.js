@@ -328,7 +328,7 @@ module.exports = invariant;
 
 
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -1208,6 +1208,16 @@ module.exports = ReactComponentTreeHook;
 "use strict";
 
 
+module.exports = __webpack_require__(23);
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1244,7 +1254,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1270,16 +1280,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = { debugTool: debugTool };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(23);
-
 
 /***/ }),
 /* 12 */
@@ -1622,7 +1622,7 @@ var _assign = __webpack_require__(4);
 
 var PooledClass = __webpack_require__(22);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var warning = __webpack_require__(2);
 
 var didWarnForAddedNewProperty = false;
@@ -1893,7 +1893,7 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 
 
 
-var React = __webpack_require__(11);
+var React = __webpack_require__(9);
 var factory = __webpack_require__(78);
 
 if (typeof React === 'undefined') {
@@ -2203,7 +2203,7 @@ module.exports = warning;
 /* harmony export (immutable) */ __webpack_exports__["a"] = createRouteFromReactElement;
 /* unused harmony export createRoutesFromReactChildren */
 /* harmony export (immutable) */ __webpack_exports__["b"] = createRoutes;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -3044,7 +3044,7 @@ module.exports = reactProdInvariant;
 
 
 var ReactRef = __webpack_require__(138);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 
 var warning = __webpack_require__(2);
 
@@ -6078,7 +6078,7 @@ module.exports = getEventModifierState;
 var DOMLazyTree = __webpack_require__(26);
 var Danger = __webpack_require__(149);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 
 var createMicrosoftUnsafeLocalFunction = __webpack_require__(54);
 var setInnerHTML = __webpack_require__(40);
@@ -6735,7 +6735,7 @@ var _prodInvariant = __webpack_require__(3);
 
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactInstanceMap = __webpack_require__(33);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 var ReactUpdates = __webpack_require__(13);
 
 var invariant = __webpack_require__(1);
@@ -6971,7 +6971,7 @@ module.exports = ReactUpdateQueue;
 
 var _assign = __webpack_require__(4);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var warning = __webpack_require__(2);
 
 var validateDOMNesting = emptyFunction;
@@ -7480,7 +7480,7 @@ function mapAsync(array, work, callback) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_create_react_class__);
@@ -8696,7 +8696,7 @@ module.exports = function(isValidElement) {
 
 
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(1);
 var warning = __webpack_require__(2);
 var assign = __webpack_require__(4);
@@ -10879,7 +10879,7 @@ module.exports = CSSProperty;
 
 var DOMProperty = __webpack_require__(17);
 var ReactDOMComponentTree = __webpack_require__(5);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 
 var quoteAttributeValueForBrowser = __webpack_require__(163);
 var warning = __webpack_require__(2);
@@ -11803,7 +11803,7 @@ module.exports = traverseAllChildren;
  * @typechecks
  */
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 
 /**
  * Upstream version of event listener. Does not take into account specific
@@ -12063,7 +12063,7 @@ var ReactDOMContainerInfo = __webpack_require__(205);
 var ReactDOMFeatureFlags = __webpack_require__(206);
 var ReactFeatureFlags = __webpack_require__(84);
 var ReactInstanceMap = __webpack_require__(33);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 var ReactMarkupChecksum = __webpack_require__(207);
 var ReactReconciler = __webpack_require__(25);
 var ReactUpdateQueue = __webpack_require__(60);
@@ -12928,7 +12928,7 @@ function assignRouterState(router, _ref) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_create_react_class__);
@@ -13573,14 +13573,14 @@ function createRouterHistory(createHistory) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(129);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__getLocation_js__ = __webpack_require__(242);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__getCities_js__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__getDistance_js__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__countDistance_js__ = __webpack_require__(244);
 //Importing React
 
 
@@ -13593,11 +13593,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
 //Google API KEy
 let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // Top static elements
   class Logo extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13630,50 +13632,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Search element
   class Search extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-
-    constructor(props) {
-      super(props);
-
-      this.submitHandler = e => {
-
-        for (let i = 0; i < this.state.cityList.length; i++) {
-
-          if (this.state.cityList[i].city) {
-            if (this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()) {
-              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name);
-              console.log('ID Miasta:' + this.state.cityList[i].city.id);
-              console.log('ID Stacji:' + this.state.cityList[i].id);
-              console.log('lat: ' + this.state.cityList[i].gegrLat);
-              console.log('lat: ' + this.state.cityList[i].gegrLon);
-            } else {
-              console.log('To nie to miasto!');
-            }
-          }
-        }
-      };
-
-      this.handleKeyPress = event => {
-        if (event.key == 'Enter') {
-          this.submitHandler();
-        }
-      };
-
-      this.state = {
-        inputValue: '',
-        cityList: {}
-      };
-    }
-
-    componentDidMount() {
-      Object(__WEBPACK_IMPORTED_MODULE_4__getCities_js__["a" /* default */])(this);
-    }
-
-    onFieldChange(e) {
-      const fieldValue = e.target.value;
-      const fieldName = e.target.name;
-      this.props.changeHandler(fieldName, fieldValue);
-    }
 
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13686,39 +13646,24 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'text',
             placeholder: 'wyszukaj swoje miasto',
             className: 'search_input',
-            onChange: this.onFieldChange.bind(this),
-            onKeyPress: this.handleKeyPress,
+            onChange: this.props.changeHandler,
+            onKeyPress: this.props.handleKeyPress,
             name: 'Dupa',
-            value: this.state.inputValue
+            value: this.props.inputValue
           }),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
             type: 'submit',
             name: '', value: 'Szukaj',
             className: 'search_submit',
-            onClick: this.submitHandler
+            onClick: this.props.submitHandler
           })
         )
       );
     }
   }
 
+  //Localize element
   class Localize extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-
-    constructor(props) {
-      super(props);
-
-      this.localizationHandler = () => {
-        console.log(this.state.pos);
-      };
-
-      this.state = {
-        pos: {}
-      };
-    }
-
-    componentDidMount() {
-      Object(__WEBPACK_IMPORTED_MODULE_3__getLocation_js__["a" /* default */])(this);
-    }
 
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13737,7 +13682,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
               type: 'button',
               name: 'button',
-              onClick: this.localizationHandler
+              onClick: this.props.locate
             },
             'Zlokalizuj mnie'
           )
@@ -13746,6 +13691,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Static footer element
   class Footer extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13764,26 +13710,71 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Main component - all functionality here
   class Home extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
     constructor(props) {
       super(props);
 
-      this.changeHandler = (fieldName, fieldValue) => {
-        this.setState({ fieldName: fieldValue });
-        console.log(fieldName.target.value);
+      this.keyPressHandler = e => {
+        if (e.key == 'Enter') {
+          this.submitHandler();
+        }
+      };
+
+      this.submitHandler = e => {
+        for (let i = 0; i < this.state.cityList.length; i++) {
+          if (this.state.cityList[i].city) {
+            if (this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()) {
+              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name);
+              console.log('ID Miasta:' + this.state.cityList[i].city.id);
+              console.log('ID Stacji:' + this.state.cityList[i].id);
+              console.log('lat: ' + this.state.cityList[i].gegrLat);
+              console.log('lat: ' + this.state.cityList[i].gegrLon);
+            } else {
+              console.log('To nie to miasto!');
+            }
+          }
+        }
+      };
+
+      this.changeHandler = e => {
+        this.setState({ inputValue: e.target.value });
+        console.log(e.target.value);
+      };
+
+      this.localizationHandler = () => {
+        Object(__WEBPACK_IMPORTED_MODULE_3__getLocation_js__["a" /* default */])(this);
       };
 
       this.state = {
-        inputValue: {}
+        inputValue: '',
+        cityList: {},
+        pos: {}
       };
     }
 
+    // Component lifecycle 
     componentDidMount() {
       Object(__WEBPACK_IMPORTED_MODULE_4__getCities_js__["a" /* default */])(this);
-      Object(__WEBPACK_IMPORTED_MODULE_5__getDistance_js__["a" /* default */])();
     }
 
+    shouldComponentUpdate() {
+      if (this.state.pos === null) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    componentDidUpdate() {
+      Object(__WEBPACK_IMPORTED_MODULE_5__countDistance_js__["a" /* default */])(this);
+    }
+
+    // Component functions and handlers
+
+
+    // Rendering Main component and passing functions
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -13791,14 +13782,18 @@ document.addEventListener('DOMContentLoaded', function () {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Logo, null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Heading, null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Search, {
-          changeHandler: this.changeHandler.bind(this)
+          changeHandler: this.changeHandler.bind(this),
+          inputValue: this.state.inputValue,
+          submitHandler: this.submitHandler.bind(this),
+          keyPressHandler: this.keyPressHandler.bind(this)
         }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Localize, null),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Localize, { locate: this.localizationHandler.bind(this) }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Footer, null)
       );
     }
   }
 
+  // Just rendering app and connecting routes
   class App extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -13838,7 +13833,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var PooledClass = __webpack_require__(117);
 var ReactElement = __webpack_require__(21);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var traverseAllChildren = __webpack_require__(118);
 
 var twoArgumentPooler = PooledClass.twoArgumentPooler;
@@ -14971,7 +14966,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactInstrumentation = __webpack_require__(10);
+  var ReactInstrumentation = __webpack_require__(11);
   var ReactDOMUnknownPropertyHook = __webpack_require__(212);
   var ReactDOMNullInputValuePropHook = __webpack_require__(213);
   var ReactDOMInvalidARIAHook = __webpack_require__(214);
@@ -17146,7 +17141,7 @@ var DOMLazyTree = __webpack_require__(26);
 var ExecutionEnvironment = __webpack_require__(6);
 
 var createNodesFromMarkup = __webpack_require__(150);
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(1);
 
 var Danger = {
@@ -17564,11 +17559,11 @@ var ReactDOMInput = __webpack_require__(166);
 var ReactDOMOption = __webpack_require__(167);
 var ReactDOMSelect = __webpack_require__(93);
 var ReactDOMTextarea = __webpack_require__(168);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 var ReactMultiChild = __webpack_require__(169);
 var ReactServerRenderingTransaction = __webpack_require__(178);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var escapeTextContentForBrowser = __webpack_require__(41);
 var invariant = __webpack_require__(1);
 var isEventSupported = __webpack_require__(50);
@@ -18591,7 +18586,7 @@ module.exports = AutoFocusUtils;
 
 var CSSProperty = __webpack_require__(90);
 var ExecutionEnvironment = __webpack_require__(6);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 
 var camelizeStyleName = __webpack_require__(157);
 var dangerousStyleValue = __webpack_require__(159);
@@ -19833,13 +19828,13 @@ var _prodInvariant = __webpack_require__(3);
 
 var ReactComponentEnvironment = __webpack_require__(56);
 var ReactInstanceMap = __webpack_require__(33);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactReconciler = __webpack_require__(25);
 var ReactChildReconciler = __webpack_require__(170);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var flattenChildren = __webpack_require__(177);
 var invariant = __webpack_require__(1);
 
@@ -20444,7 +20439,7 @@ var ReactComponentEnvironment = __webpack_require__(56);
 var ReactCurrentOwner = __webpack_require__(12);
 var ReactErrorUtils = __webpack_require__(48);
 var ReactInstanceMap = __webpack_require__(33);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 var ReactNodeTypes = __webpack_require__(95);
 var ReactReconciler = __webpack_require__(25);
 
@@ -21635,7 +21630,7 @@ var _assign = __webpack_require__(4);
 
 var PooledClass = __webpack_require__(22);
 var Transaction = __webpack_require__(38);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 var ReactServerUpdateQueue = __webpack_require__(179);
 
 /**
@@ -22242,7 +22237,7 @@ var _assign = __webpack_require__(4);
 var ReactUpdates = __webpack_require__(13);
 var Transaction = __webpack_require__(38);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 
 var RESET_BATCHED_UPDATES = {
   initialize: emptyFunction,
@@ -22551,7 +22546,7 @@ var CallbackQueue = __webpack_require__(83);
 var PooledClass = __webpack_require__(22);
 var ReactBrowserEventEmitter = __webpack_require__(42);
 var ReactInputSelection = __webpack_require__(100);
-var ReactInstrumentation = __webpack_require__(10);
+var ReactInstrumentation = __webpack_require__(11);
 var Transaction = __webpack_require__(38);
 var ReactUpdateQueue = __webpack_require__(60);
 
@@ -23632,7 +23627,7 @@ var SyntheticTransitionEvent = __webpack_require__(203);
 var SyntheticUIEvent = __webpack_require__(32);
 var SyntheticWheelEvent = __webpack_require__(204);
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var getEventCharCode = __webpack_require__(62);
 var invariant = __webpack_require__(1);
 
@@ -24950,7 +24945,7 @@ module.exports = ReactDOMInvalidARIAHook;
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_create_react_class__);
@@ -25127,7 +25122,7 @@ var propTypes = {
 
 
 
-var emptyFunction = __webpack_require__(9);
+var emptyFunction = __webpack_require__(10);
 var invariant = __webpack_require__(1);
 var ReactPropTypesSecret = __webpack_require__(46);
 
@@ -25900,7 +25895,7 @@ function getRouteParams(route, params) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_create_react_class__);
@@ -25932,7 +25927,7 @@ var IndexLink = __WEBPACK_IMPORTED_MODULE_1_create_react_class___default()({
 /* WEBPACK VAR INJECTION */(function(process) {/* unused harmony export default */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_invariant___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_invariant__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_create_react_class___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_create_react_class__);
@@ -26733,7 +26728,7 @@ var loopAsync = exports.loopAsync = function loopAsync(turns, work, callback) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RouterContext__ = __webpack_require__(64);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routerWarning__ = __webpack_require__(27);
@@ -27250,25 +27245,19 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = locate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 
 //Geolocation
 
 function locate(a) {
-  console.log('dupaaaa');
-
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
-    console.log('ddddd');
   } else {
     console.log('brak lokalizacji');
-  }
-
+  };
   function showPosition(position) {
     a.setState({ pos: { lat: position.coords.latitude, long: position.coords.longitude } });
-    console.log(position.coords.latitude);
-    console.log(position.coords.longitude);
   };
 };
 
@@ -27278,7 +27267,7 @@ function locate(a) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getCities;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 
 
@@ -27286,7 +27275,7 @@ function locate(a) {
 let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
 //Getting Cities list
-function getCities(a) {
+function getCities(passedThis) {
 
   let mode = { mode: 'cors',
     method: 'GET'
@@ -27300,8 +27289,8 @@ function getCities(a) {
   fetch(preLink + link, mode).then(function (response) {
     return response.json();
   }).then(function (json) {
-    console.log('parsed json', json);
-    a.setState({ cityList: json });
+    // console.log('parsed json', json)
+    passedThis.setState({ cityList: json });
   }).catch(function (err) {
     console.log('parsing failed', err);
   });
@@ -27323,38 +27312,14 @@ function getCities(a) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = getDistance;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony export (immutable) */ __webpack_exports__["a"] = countDistance;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 
 
-//Getting Cities list
-function getDistance(a, start, end) {
-
-  let mode = { mode: 'cors',
-    method: 'GET'
-  };
-  let startPoint = {
-    lat: 52.230381799999996,
-    lon: 20.9877956
-  };
-  let endPoint = {
-    lat: 52.225157,
-    lon: 21.014803
-  };
-  let preLink = 'https://cors-anywhere.herokuapp.com/';
-  let link = `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=`;
-  let destLink = startPoint.lat + ',' + startPoint.lon + '&destinations=' + endPoint.lat + ',' + endPoint.lon + '&key=';
-  let apiKey = 'AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM';
-
-  fetch(preLink + link + destLink + apiKey, mode).then(function (response) {
-    return response.json();
-  }).then(function (json) {
-    console.log('parsed json', json);
-  }).catch(function (err) {
-    console.log('parsing failed', err);
-  });
-};
+function countDistance(passedThis) {
+  console.log(passedThis.state.pos);
+}
 
 /***/ })
 /******/ ]);

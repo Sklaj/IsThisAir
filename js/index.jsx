@@ -16,12 +16,14 @@ import {
 // //Importing functions
 import locate from './getLocation.js';
 import getCities from './getCities.js';
-import getDistance from './getDistance.js'
+import countDistance from './countDistance.js'
+
 //Google API KEy
 let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
 document.addEventListener('DOMContentLoaded', function(){
 
+// Top static elements
     class Logo extends React.Component{
       render(){
         return(
@@ -33,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function(){
         )
       }
     }
+
 
     class Heading extends React.Component{
       render(){
@@ -46,49 +49,9 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
 
+
+// Search element
     class Search extends React.Component{
-
-      constructor(props){
-        super(props);
-        this.state={
-          inputValue:'',
-          cityList:{}
-        }
-      }
-
-      componentDidMount(){
-        getCities(this);
-      }
-
-      submitHandler = (e) => {
-
-        for(let i=0; i < this.state.cityList.length; i++){
-
-          if(this.state.cityList[i].city){
-            if(this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()){
-              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
-              console.log('ID Miasta:' + this.state.cityList[i].city.id)
-              console.log('ID Stacji:' + this.state.cityList[i].id)
-              console.log('lat: ' + this.state.cityList[i].gegrLat)
-              console.log('lat: ' + this.state.cityList[i].gegrLon)
-            } else {
-                console.log('To nie to miasto!')
-            }
-          }
-        }
-      }
-
-      handleKeyPress = (event) => {
-        if(event.key == 'Enter'){
-          this.submitHandler()
-        }
-      }
-
-      onFieldChange(e){
-        const fieldValue = e.target.value;
-        const fieldName = e.target.name;
-        this.props.changeHandler(fieldName,fieldValue);
-      }
 
       render(){
         return(
@@ -98,16 +61,16 @@ document.addEventListener('DOMContentLoaded', function(){
                 type="text"
                 placeholder='wyszukaj swoje miasto'
                 className="search_input"
-                onChange={this.onFieldChange.bind(this)}
-                onKeyPress={this.handleKeyPress}
+                onChange={this.props.changeHandler}
+                onKeyPress={this.props.handleKeyPress}
                 name='Dupa'
-                value={this.state.inputValue}
+                value={this.props.inputValue}
               />
               <input
                 type="submit"
                 name="" value="Szukaj"
                 className="search_submit"
-                onClick={this.submitHandler}
+                onClick={this.props.submitHandler}
               />
             </div>
           </div>
@@ -115,47 +78,32 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
 
+
+//Localize element
     class Localize extends React.Component{
-
-      constructor(props){
-        super(props);
-        this.state = {
-          pos:{
-
-          }
-        }
-      }
-
-      componentDidMount(){
-        locate(this);
-      }
-
-      localizationHandler = () => {
-        console.log(this.state.pos)
-      }
 
       render(){
         return(
           <div className="row localize_row">
             <div className="container localize">
-              <p>Lub zlokalizuj się akutomatycznie</p>
-                {/* <Link to='#'> */}
-                  <button
-                    type="button"
-                    name="button"
-                    onClick={this.localizationHandler}
-                    >
-                      Zlokalizuj mnie
-                    </button>
-                  {/* </Link> */}
-
-
+              <p>
+                Lub zlokalizuj się akutomatycznie
+              </p>
+              <button
+                type="button"
+                name="button"
+                onClick={this.props.locate}
+              >
+                Zlokalizuj mnie
+              </button>
             </div>
           </div>
         )
       }
     }
 
+
+// Static footer element
     class Footer extends React.Component{
       render(){
         return(
@@ -171,25 +119,72 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
 
+
+// Main component - all functionality here
     class Home extends React.Component{
 
       constructor(props){
         super(props);
         this.state = {
-          inputValue:{}
+          inputValue:'',
+          cityList:{},
+          pos:{}
         }
       }
 
-      changeHandler = (fieldName, fieldValue) => {
-        this.setState({fieldName: fieldValue})
-        console.log(fieldName.target.value)
-      }
-
+// Component lifecycle 
       componentDidMount(){
         getCities(this);
-        getDistance()
+
       }
 
+      shouldComponentUpdate(){
+        if(this.state.pos === null){
+          return false;
+        } else {
+          return true;
+        }
+      }
+
+      componentDidUpdate(){
+        countDistance(this);
+      }
+
+
+// Component functions and handlers
+      keyPressHandler = (e) => {
+        if(e.key == 'Enter'){
+          this.submitHandler()
+        }
+      }
+
+      submitHandler = (e) => {
+        for(let i=0; i < this.state.cityList.length; i++){
+          if(this.state.cityList[i].city){
+            if(this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()){
+              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
+              console.log('ID Miasta:' + this.state.cityList[i].city.id)
+              console.log('ID Stacji:' + this.state.cityList[i].id)
+              console.log('lat: ' + this.state.cityList[i].gegrLat)
+              console.log('lat: ' + this.state.cityList[i].gegrLon)
+            } else {
+                console.log('To nie to miasto!')
+            }
+          }
+        }
+      }
+
+      changeHandler = (e) => {
+        this.setState({inputValue: e.target.value})
+        console.log(e.target.value)
+      }
+
+      localizationHandler = () => {
+        locate(this);
+      }
+
+
+// Rendering Main component and passing functions
       render(){
         return(
           <div>
@@ -197,14 +192,22 @@ document.addEventListener('DOMContentLoaded', function(){
             <Heading/>
             <Search
               changeHandler={this.changeHandler.bind(this)}
+              inputValue={this.state.inputValue}
+              submitHandler={this.submitHandler.bind(this)}
+              keyPressHandler={this.keyPressHandler.bind(this)}
             />
-            <Localize/>
+            <Localize locate={this.localizationHandler.bind(this)}/>
             <Footer/>
           </div>
         )
       }
     }
 
+
+
+
+
+// Just rendering app and connecting routes
     class App extends React.Component{
       render(){
         return(

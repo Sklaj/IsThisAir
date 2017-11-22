@@ -5,7 +5,7 @@ let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
 
 //Getting Cities list
-  export default function getCities (a){
+  export default function getCities (passedThis){
 
     let mode = {mode: 'cors',
                 method: 'GET',
@@ -21,8 +21,8 @@ let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
         return response.json()
       })
       .then(function(json) {
-        console.log('parsed json', json)
-        a.setState({cityList:json})
+        // console.log('parsed json', json)
+        passedThis.setState({cityList:json})
       })
       .catch(function(err) {
         console.log('parsing failed', err)
