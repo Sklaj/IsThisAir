@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 placeholder='wyszukaj swoje miasto'
                 className="search_input"
                 onChange={this.props.changeHandler}
-                onKeyPress={this.props.handleKeyPress}
+                onKeyPress={this.props.keyPressHandler}
                 name='Dupa'
                 value={this.props.inputValue}
               />
@@ -126,35 +126,18 @@ document.addEventListener('DOMContentLoaded', function(){
       constructor(props){
         super(props);
         this.state = {
-          inputValue:'',
+          pos:{},
           cityList:{},
-          pos:{}
+          inputValue:'',
+          closestStation:'NaN'
         }
-      }
-
-// Component lifecycle 
-      componentDidMount(){
-        getCities(this);
-
-      }
-
-      shouldComponentUpdate(){
-        if(this.state.pos === null){
-          return false;
-        } else {
-          return true;
-        }
-      }
-
-      componentDidUpdate(){
-        countDistance(this);
       }
 
 
 // Component functions and handlers
       keyPressHandler = (e) => {
         if(e.key == 'Enter'){
-          this.submitHandler()
+          this.submitHandler(e)
         }
       }
 
@@ -179,10 +162,43 @@ document.addEventListener('DOMContentLoaded', function(){
         console.log(e.target.value)
       }
 
-      localizationHandler = () => {
-        locate(this);
+      closestPoint = () => {
+        if(this.state.closestStation.dist){
+          for(let i = 0; i < this.state.cityList.length; i++){
+            if (this.state.cityList[i].id === this.state.closestStation.id){
+              console.log(this.state.cityList[i])
+            }
+          }
+        }
       }
 
+      localizationHandler = () => {
+        locate(this);
+        countDistance(this);
+      }
+
+
+// Component lifecycle
+      componentDidMount(){
+        getCities(this);
+      }
+
+      // shouldComponentUpdate(){
+      //   if(this.state.closestStation.dist){
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // }
+      //
+      // componentDidUpdate(){
+      //   // console.log(this.state.closestStation)
+      //   this.closestPoint()
+      //   // this.closestPoint()
+      //   // if(this.state.closestStation.dist !== NaN){
+      //   //   console.log(this.state.closestStation)
+      //   // }
+      // }
 
 // Rendering Main component and passing functions
       render(){

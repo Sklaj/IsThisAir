@@ -13647,7 +13647,7 @@ document.addEventListener('DOMContentLoaded', function () {
             placeholder: 'wyszukaj swoje miasto',
             className: 'search_input',
             onChange: this.props.changeHandler,
-            onKeyPress: this.props.handleKeyPress,
+            onKeyPress: this.props.keyPressHandler,
             name: 'Dupa',
             value: this.props.inputValue
           }),
@@ -13718,7 +13718,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       this.keyPressHandler = e => {
         if (e.key == 'Enter') {
-          this.submitHandler();
+          this.submitHandler(e);
         }
       };
 
@@ -13743,36 +13743,53 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(e.target.value);
       };
 
+      this.closestPoint = () => {
+        if (this.state.closestStation.dist) {
+          for (let i = 0; i < this.state.cityList.length; i++) {
+            if (this.state.cityList[i].id === this.state.closestStation.id) {
+              console.log(this.state.cityList[i]);
+            }
+          }
+        }
+      };
+
       this.localizationHandler = () => {
         Object(__WEBPACK_IMPORTED_MODULE_3__getLocation_js__["a" /* default */])(this);
+        Object(__WEBPACK_IMPORTED_MODULE_5__countDistance_js__["a" /* default */])(this);
       };
 
       this.state = {
-        inputValue: '',
+        pos: {},
         cityList: {},
-        pos: {}
+        inputValue: '',
+        closestStation: 'NaN'
       };
-    }
-
-    // Component lifecycle 
-    componentDidMount() {
-      Object(__WEBPACK_IMPORTED_MODULE_4__getCities_js__["a" /* default */])(this);
-    }
-
-    shouldComponentUpdate() {
-      if (this.state.pos === null) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-
-    componentDidUpdate() {
-      Object(__WEBPACK_IMPORTED_MODULE_5__countDistance_js__["a" /* default */])(this);
     }
 
     // Component functions and handlers
 
+
+    // Component lifecycle
+    componentDidMount() {
+      Object(__WEBPACK_IMPORTED_MODULE_4__getCities_js__["a" /* default */])(this);
+    }
+
+    // shouldComponentUpdate(){
+    //   if(this.state.closestStation.dist){
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // }
+    //
+    // componentDidUpdate(){
+    //   // console.log(this.state.closestStation)
+    //   this.closestPoint()
+    //   // this.closestPoint()
+    //   // if(this.state.closestStation.dist !== NaN){
+    //   //   console.log(this.state.closestStation)
+    //   // }
+    // }
 
     // Rendering Main component and passing functions
     render() {
@@ -27318,7 +27335,28 @@ function getCities(passedThis) {
 
 
 function countDistance(passedThis) {
-  console.log(passedThis.state.pos);
+
+  let distanceArr = [];
+
+  for (let i = 0; i < passedThis.state.cityList.length; i++) {
+    distanceArr.push({ dist: Math.sqrt(Math.pow(passedThis.state.pos.lat - passedThis.state.cityList[i].gegrLat, 2) + Math.pow(passedThis.state.pos.long - passedThis.state.cityList[i].gegrLon, 2)),
+      id: passedThis.state.cityList[i].id
+    });
+  }
+
+  function compare(a, b) {
+    if (a.dist < b.dist) {
+      return -1;
+    } else if (a.dist > b.dist) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  distanceArr.sort(compare);
+  let result = distanceArr[0];
+
+  passedThis.setState({ closestStation: result });
 }
 
 /***/ })
