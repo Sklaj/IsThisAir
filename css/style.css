@@ -173,6 +173,11 @@ footer{
   align-items: center;
 }
 
+.status{
+  padding: 10px;
+  background-color: yellow;
+}
+
 .popup_head h1,h2,h3{
   text-align: center;
 }

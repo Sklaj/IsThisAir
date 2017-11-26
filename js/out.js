@@ -15049,7 +15049,13 @@ document.addEventListener('DOMContentLoaded', function () {
         inputValue: '',
         closestStation: 'NaN',
         shouldShow: false,
-        stationIndex: ''
+        stationIndex: {
+          general: 'Pobieranie...',
+          co: 'Pobieranie...',
+          no2: 'Pobieranie...',
+          pm10: 'Pobieranie...',
+          pm25: 'Pobieranie...'
+        }
       };
     }
 
@@ -27033,7 +27039,6 @@ function locate(passedThis) {
   function showPosition(position) {
     passedThis.setState({ pos: { lat: position.coords.latitude, lng: position.coords.longitude } });
     Object(__WEBPACK_IMPORTED_MODULE_1__countDistance_js__["a" /* default */])(passedThis);
-    Object(__WEBPACK_IMPORTED_MODULE_2__getData_js__["a" /* default */])(passedThis);
     passedThis.setState({ shouldShow: true });
   };
 };

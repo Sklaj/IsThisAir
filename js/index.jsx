@@ -134,7 +134,13 @@ document.addEventListener('DOMContentLoaded', function(){
           inputValue:'',
           closestStation:'NaN',
           shouldShow: false,
-          stationIndex:''
+          stationIndex:{
+            general: 'Pobieranie...',
+            co: 'Pobieranie...',
+            no2: 'Pobieranie...',
+            pm10: 'Pobieranie...',
+            pm25: 'Pobieranie...',
+          }
         }
       }
 
