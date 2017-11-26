@@ -173,6 +173,10 @@ footer{
   align-items: center;
 }
 
+.popup_head h1,h2,h3{
+  text-align: center;
+}
+
 .infoBox{
   display: flex;
   justify-content: center;

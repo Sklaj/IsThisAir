@@ -15056,10 +15056,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Component functions and handlers
 
 
-    // showData = () => {
-    //   getData(this)
-    // }
-
     // Component lifecycle
     componentDidMount() {
       Object(__WEBPACK_IMPORTED_MODULE_3__getCities_js__["a" /* default */])(this);
@@ -15084,12 +15080,10 @@ document.addEventListener('DOMContentLoaded', function () {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Footer, null),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__popup_jsx__["a" /* default */], {
           shouldShow: this.state.shouldShow,
-
-          stationName: this.state.closestStation.name,
-          hidePopupHandler: this.hidePopupHandler.bind(this)
-          // showData={this.showData.bind(this)}
-          , pos: this.state.closestStation.position,
+          hidePopupHandler: this.hidePopupHandler.bind(this),
+          pos: this.state.closestStation.position,
           stationId: toString(this.state.closestStation.id),
+          stationName: this.state.closestStation.name,
           stationIndex: this.state.stationIndex
 
         })
@@ -27039,7 +27033,7 @@ function locate(passedThis) {
   function showPosition(position) {
     passedThis.setState({ pos: { lat: position.coords.latitude, lng: position.coords.longitude } });
     Object(__WEBPACK_IMPORTED_MODULE_1__countDistance_js__["a" /* default */])(passedThis);
-    // getData(passedThis);
+    Object(__WEBPACK_IMPORTED_MODULE_2__getData_js__["a" /* default */])(passedThis);
     passedThis.setState({ shouldShow: true });
   };
 };
@@ -27052,6 +27046,8 @@ function locate(passedThis) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = countDistance;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__getData_js__ = __webpack_require__(518);
+
 
 
 function countDistance(passedThis) {
@@ -27065,7 +27061,7 @@ function countDistance(passedThis) {
 
     distanceArr.push({ dist: distance,
       id: passedThis.state.cityList[i].id,
-      name: passedThis.state.cityList[i].city,
+      name: passedThis.state.cityList[i],
       position: {
         lat: Number(passedThis.state.cityList[i].gegrLat),
         lng: Number(passedThis.state.cityList[i].gegrLon)
@@ -27086,6 +27082,7 @@ function countDistance(passedThis) {
   result = distanceArr[0];
 
   passedThis.setState({ closestStation: result });
+  Object(__WEBPACK_IMPORTED_MODULE_1__getData_js__["a" /* default */])(passedThis);
 }
 
 /***/ }),
@@ -27163,12 +27160,12 @@ class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'h2',
           null,
-          'box1'
+          'NO2'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'p',
           null,
-          'tak sobie'
+          this.props.stationIndex.no2
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -27177,12 +27174,12 @@ class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'h2',
           null,
-          'box2'
+          'CO'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'p',
           null,
-          'ujdzie'
+          this.props.stationIndex.co
         )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -27191,12 +27188,26 @@ class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'h2',
           null,
-          'box3'
+          'Py\u0142y PM10'
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'p',
           null,
-          'good'
+          this.props.stationIndex.pm10
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'info' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          'Py\u0142y PM25'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'p',
+          null,
+          this.props.stationIndex.pm25
         )
       )
     );
@@ -27212,12 +27223,12 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h1',
         null,
-        "Miasto: " + this.props.stationName.name
+        "Miasto: " + this.props.stationName.city.name
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'h2',
         null,
-        this.props.stationAdress
+        this.props.stationName.addressStreet
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
@@ -27225,9 +27236,14 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
           className: 'status'
         },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
+          'h3',
           null,
-          this.props.stationIndex
+          'Aktualny status jako\u015Bci powietrza w obr\u0119bie wybranej stacji pomiarowej:'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h1',
+          null,
+          this.props.stationIndex.general
         )
       )
     );
@@ -27237,7 +27253,7 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
 const MapWithAMarker = compose(withScriptjs, withGoogleMap)(props => __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
   GoogleMap,
   {
-    defaultZoom: 10,
+    defaultZoom: 13,
     defaultCenter: props.position
   },
   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Marker, {
@@ -27255,8 +27271,8 @@ class PopUp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     };
   }
 
-  componentDidMount() {
-    Object(__WEBPACK_IMPORTED_MODULE_1__getData_js__["a" /* default */])(this, this.props.statinId);
+  componentWillMount() {
+    this.props.shouldShow === true;
   }
 
   render() {
@@ -27277,11 +27293,14 @@ class PopUp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PopUpHead
             // showData={this.porps.showData}
             , { stationId: this.props.stationId,
-              stationName: this.props.stationName
+              stationName: this.props.stationName,
+              stationIndex: this.props.stationIndex
               // stationAdress={this.props.stationAdress}
-              // stationIndex={this.props.stationIndex}
+
             }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, null)
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, {
+              stationIndex: this.props.stationIndex
+            })
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MapWithAMarker, {
             googleMapURL: "https://maps.googleapis.com/maps/api/js?key=" + googleApiKey + "&v=3.exp&libraries=geometry,drawing,places",
@@ -38877,7 +38896,7 @@ var updaterMap = {}
 
 
 //Getting Cities list
-function getData(passedThis, id) {
+function getData(passedThis) {
 
   let mode = { mode: 'cors',
     method: 'GET'
@@ -38885,14 +38904,21 @@ function getData(passedThis, id) {
 
   let preLink = 'https://cors-anywhere.herokuapp.com/';
   let link = 'api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/';
-  let stationId = id;
+  let stationId = passedThis.state.closestStation.id;
   // let cityList;
 
   fetch(preLink + link + stationId, mode).then(function (response) {
     return response.json();
   }).then(function (json) {
     // console.log('parsed json', json)
-    passedThis.setState({ stationIndex: json });
+    passedThis.setState({ stationIndex: {
+        general: json.stIndexLevel.indexLevelName,
+        no2: json.no2IndexLevel.indexLevelName,
+        co: json.coIndexLevel.indexLevelName,
+        pm10: json.pm10IndexLevel.indexLevelName,
+        pm25: json.pm25IndexLevel.indexLevelName
+      }
+    });
   }).catch(function (err) {
     console.log('parsing failed', err);
   });

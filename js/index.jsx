@@ -181,9 +181,6 @@ document.addEventListener('DOMContentLoaded', function(){
         locate(this);
       }
 
-      // showData = () => {
-      //   getData(this)
-      // }
 
       hidePopupHandler = (e) => {
         if(e.target.className == "overlay"){
@@ -215,12 +212,10 @@ document.addEventListener('DOMContentLoaded', function(){
             <Footer/>
             <PopUp
               shouldShow={this.state.shouldShow}
-
-              stationName={this.state.closestStation.name}
               hidePopupHandler={this.hidePopupHandler.bind(this)}
-              // showData={this.showData.bind(this)}
               pos={this.state.closestStation.position}
               stationId={toString(this.state.closestStation.id)}
+              stationName={this.state.closestStation.name}
               stationIndex={this.state.stationIndex}
 
             />

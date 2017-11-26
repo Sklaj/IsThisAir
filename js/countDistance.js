@@ -1,4 +1,5 @@
 import React from 'react';
+import getData from './getData.js'
 
 export default function countDistance(passedThis){
 
@@ -20,7 +21,7 @@ export default function countDistance(passedThis){
     distanceArr.push(
       { dist: distance,
         id: passedThis.state.cityList[i].id,
-        name: passedThis.state.cityList[i].city,
+        name: passedThis.state.cityList[i],
         position: {
           lat: Number(passedThis.state.cityList[i].gegrLat),
           lng: Number(passedThis.state.cityList[i].gegrLon)
@@ -42,5 +43,5 @@ export default function countDistance(passedThis){
   result = distanceArr[0]
 
   passedThis.setState({closestStation: result})
-
+  getData(passedThis);
 }
