@@ -1,14 +1,14 @@
 //Importing React
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {
-        Router,
-        Route,
-        Link,
-        IndexLink,
-        IndexRoute,
-        hashHistory
-        } from 'react-router';
+// import {
+//         Router,
+//         Route,
+//         Link,
+//         IndexLink,
+//         IndexRoute,
+//         hashHistory
+//         } from 'react-router';
 
 // //Importing components
 // import MapApp from './mapapp.jsx'
@@ -16,10 +16,10 @@ import {
 // //Importing functions
 import locate from './getLocation.js';
 import getCities from './getCities.js';
-import countDistance from './countDistance.js'
+import getData from './getData.js'
 
-//Google API KEy
-let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
+import PopUp from './popup.jsx'
+
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -29,7 +29,10 @@ document.addEventListener('DOMContentLoaded', function(){
         return(
           <div className="row">
             <div className="container logo">
-              <img src="img/logo.png" alt="dupa"/>
+              <img
+                src="img/logo.png"
+                alt="dupa"
+              />
             </div>
           </div>
         )
@@ -68,7 +71,8 @@ document.addEventListener('DOMContentLoaded', function(){
               />
               <input
                 type="submit"
-                name="" value="Szukaj"
+                name=""
+                value="Szukaj"
                 className="search_submit"
                 onClick={this.props.submitHandler}
               />
@@ -119,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
 
-
 // Main component - all functionality here
     class Home extends React.Component{
 
@@ -129,7 +132,9 @@ document.addEventListener('DOMContentLoaded', function(){
           pos:{},
           cityList:{},
           inputValue:'',
-          closestStation:'NaN'
+          closestStation:'NaN',
+          shouldShow: false,
+          stationIndex:''
         }
       }
 
@@ -174,31 +179,23 @@ document.addEventListener('DOMContentLoaded', function(){
 
       localizationHandler = () => {
         locate(this);
-        countDistance(this);
       }
 
+      // showData = () => {
+      //   getData(this)
+      // }
+
+      hidePopupHandler = (e) => {
+        if(e.target.className == "overlay"){
+          this.setState({shouldShow: false});
+        }
+      }
 
 // Component lifecycle
       componentDidMount(){
         getCities(this);
       }
 
-      // shouldComponentUpdate(){
-      //   if(this.state.closestStation.dist){
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // }
-      //
-      // componentDidUpdate(){
-      //   // console.log(this.state.closestStation)
-      //   this.closestPoint()
-      //   // this.closestPoint()
-      //   // if(this.state.closestStation.dist !== NaN){
-      //   //   console.log(this.state.closestStation)
-      //   // }
-      // }
 
 // Rendering Main component and passing functions
       render(){
@@ -212,14 +209,25 @@ document.addEventListener('DOMContentLoaded', function(){
               submitHandler={this.submitHandler.bind(this)}
               keyPressHandler={this.keyPressHandler.bind(this)}
             />
-            <Localize locate={this.localizationHandler.bind(this)}/>
+            <Localize
+              locate={this.localizationHandler.bind(this)}
+            />
             <Footer/>
+            <PopUp
+              shouldShow={this.state.shouldShow}
+
+              stationName={this.state.closestStation.name}
+              hidePopupHandler={this.hidePopupHandler.bind(this)}
+              // showData={this.showData.bind(this)}
+              pos={this.state.closestStation.position}
+              stationId={toString(this.state.closestStation.id)}
+              stationIndex={this.state.stationIndex}
+
+            />
           </div>
         )
       }
     }
-
-
 
 
 
@@ -228,13 +236,7 @@ document.addEventListener('DOMContentLoaded', function(){
       render(){
         return(
           <div className="wrapper">
-            <Router history={hashHistory}>
-              <Route path='/' component={Home}>
-                <IndexRoute component={Home}/>
-                {/* <Route path='/mapapp' component={MapApp}>
-                </Route> */}
-              </Route>
-            </Router>
+            <Home/>
           </div>
         )
       }

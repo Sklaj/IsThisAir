@@ -3,14 +3,28 @@ import React from 'react';
 export default function countDistance(passedThis){
 
   let distanceArr = [];
+  let result;
 
   for(let i=0; i < passedThis.state.cityList.length; i++){
+
+    let distance = Math.sqrt(
+      Math.pow(
+        passedThis.state.pos.lat - Number(passedThis.state.cityList[i].gegrLat),2
+      )
+      +
+      Math.pow(
+        passedThis.state.pos.lng - Number(passedThis.state.cityList[i].gegrLon),2
+      )
+    )
+
     distanceArr.push(
-      { dist:
-        Math.sqrt(
-          Math.pow(passedThis.state.pos.lat - passedThis.state.cityList[i].gegrLat,2) + Math.pow(passedThis.state.pos.long - passedThis.state.cityList[i].gegrLon,2)
-        ),
-        id: passedThis.state.cityList[i].id
+      { dist: distance,
+        id: passedThis.state.cityList[i].id,
+        name: passedThis.state.cityList[i].city,
+        position: {
+          lat: Number(passedThis.state.cityList[i].gegrLat),
+          lng: Number(passedThis.state.cityList[i].gegrLon)
+        }
       }
     )
   }
@@ -25,7 +39,7 @@ export default function countDistance(passedThis){
     }
   }
   distanceArr.sort(compare)
-  let result = distanceArr[0]
+  result = distanceArr[0]
 
   passedThis.setState({closestStation: result})
 

@@ -64,7 +64,7 @@ body{
   border-radius: 5px;
   border: 1px solid #b1b1b1;
   background-color: #f0f0f0;
-  color: rgba(32,32,32, 0.4)
+  color: rgba(32,32,32, 0.8)
 }
 
 .search_submit{
@@ -128,7 +128,60 @@ footer{
 }
 
 
+/*Styling popup*/
+.overlay{
+  color: black;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  animation: fadein2 1s;
+}
 
+@keyframes fadein2 {
+  0%    { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.popup{
+  height: 70vh;
+  width: 80vw;
+  margin: 0 auto;
+  margin-top: 5%;
+  background: white;
+  animation: slide 1s;
+}
+
+.popUpBody{
+  display: inline-block;
+  float: left;
+  width: 70%;
+}
+
+.map{
+  display: inline-block;
+  float: left;
+  width: 30%;
+}
+
+.popup_head{
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.infoBox{
+  display: flex;
+  justify-content: center;
+}
+
+.info{
+  display: inline-block;
+  width: 30%
+}
 
 
 

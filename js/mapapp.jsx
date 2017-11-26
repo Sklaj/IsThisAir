@@ -1,75 +1,81 @@
 import React from 'react';
-import getLocation from './getLocation';
-
-export default class MapApp extends React.Component{
+import GoogleMapReact from 'google-map-react'
 
 
-    mapHandler(){
-      let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
-      function initMap() {
-          var uluru = {lat: -25.363, lng: 131.044};
-          var map = new google.maps.Map(document.getElementByClassName('map'), {
-            zoom: 4,
-            center: uluru
-          });
-          var marker = new google.maps.Marker({
-            position: uluru,
-            map: map
-          });
-        }
+let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
-        var map, infoWindow;
-        function initMap() {
-          map = new google.maps.Map(document.getElementByClassName('map'), {
-            center: {lat: -34.397, lng: 150.644},
-            zoom: 6
-          });
-          infoWindow = new google.maps.InfoWindow;
+// const AnyReactComponent = ({ text }) => <div>{ text }</div>;
 
-          // Try HTML5 geolocation.
-          if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-              var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-              };
-
-              infoWindow.setPosition(pos);
-              infoWindow.setContent('Location found.');
-              infoWindow.open(map);
-              map.setCenter(pos);
-            }, function() {
-              handleLocationError(true, infoWindow, map.getCenter());
-            });
-          } else {
-            // Browser doesn't support Geolocation
-            handleLocationError(false, infoWindow, map.getCenter());
-          }
-        }
-
-        componentDidMount(){
-          this.mapHandler()
-        }
-
-        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-          infoWindow.setPosition(pos);
-          infoWindow.setContent(browserHasGeolocation ?
-                                'Error: The Geolocation service failed.' :
-                                'Error: Your browser doesn\'t support geolocation.');
-          infoWindow.open(map);
-        }
+export default class Map extends React.Component {
+  static defaultProps = {
+    center: { lat: 40.7446790, lng: -73.9485420 },
+    zoom: 11
   }
-
-  render(){
-    return(
-      <div className='mapApp'>
-        <div className='map'>
-
-          <script async defer
-              src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM&callback=initMap">
-              </script>
-        </div>
+render() {
+    return (
+      <div className='google-map'>
+        <GoogleMapReact
+          bootstrapURLKeys={{
+            key: googleApiKey,
+            language: 'pl'
+          }}
+          defaultCenter={ this.props.center }
+          defaultZoom={ this.props.zoom }>
+          <AnyReactComponent
+            lat={ 40.7473310 }
+            lng={ -73.8517440 }
+            text={ "Where's Waldo?" }
+          />
+        </GoogleMapReact>
       </div>
     )
   }
 }
+
+  //   // export default function map(){
+  //
+  //     let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
+  //
+  //     // Note: This example requires that you consent to location sharing when
+  //     // prompted by your browser. If you see the error "The Geolocation service
+  //     // failed.", it means you probably did not give permission for the browser to
+  //     // locate you.
+  //     var map, infoWindow;
+  //     export default function initMap() {
+  //       map = new google.maps.Map(document.getElementById('map'), {
+  //         center: {lat: 52.220070, lng: 19.690656},
+  //         zoom: 7
+  //       });
+  //       infoWindow = new google.maps.InfoWindow;
+  //
+  //       // Try HTML5 geolocation.
+  //       if (navigator.geolocation) {
+  //         navigator.geolocation.getCurrentPosition(function(position) {
+  //           var pos = {
+  //             lat: position.coords.latitude,
+  //             lng: position.coords.longitude
+  //           };
+  //
+  //           //setting position on map
+  //           infoWindow.setPosition(pos);
+  //           infoWindow.setContent('Tutaj dupadupa');
+  //           infoWindow.open(map);
+  //           map.setCenter(pos);
+  //           map.setZoom(15);
+  //         }, function() {
+  //           handleLocationError(true, infoWindow, map.getCenter());
+  //         });
+  //       } else {
+  //         // Browser doesn't support Geolocation
+  //         handleLocationError(false, infoWindow, map.getCenter());
+  //       }
+  //     }
+  //
+  //     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+  //       infoWindow.setPosition(pos);
+  //       infoWindow.setContent(browserHasGeolocation ?
+  //                             'Error: The Geolocation service failed.' :
+  //                             'Error: Your browser doesn\'t support geolocation.');
+  //       infoWindow.open(map);
+  //     }
+  // // }

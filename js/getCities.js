@@ -1,9 +1,5 @@
 import React from 'react';
 
-//Google API KEy
-let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
-
-
 //Getting Cities list
   export default function getCities (passedThis){
 
