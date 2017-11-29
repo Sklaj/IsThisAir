@@ -28,7 +28,7 @@ class InfoBox extends React.Component{
           <p>{this.props.stationIndex.pm10}</p>
         </div>
         <div className="info">
-          <h2>Pyły PM25</h2>
+          <h2>Pyły PM2,5</h2>
           <p>{this.props.stationIndex.pm25}</p>
         </div>
       </div>
@@ -73,18 +73,9 @@ const MapWithAMarker = compose(
 
 export default class PopUp extends React.Component{
 
-  constructor(props){
-    super(props);
-    this.state = {
-      stationId: '',
-      stationIndex:''
-    }
-  }
-
   componentWillMount(){
     this.props.shouldShow===true;
   }
-
 
   render(){
 

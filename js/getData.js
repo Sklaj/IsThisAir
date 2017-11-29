@@ -19,11 +19,11 @@ import React from 'react';
       .then(function(json) {
         // console.log('parsed json', json)
         passedThis.setState({stationIndex:{
-          general: json.stIndexLevel.indexLevelName,
-          no2: json.no2IndexLevel.indexLevelName,
-          co: json.coIndexLevel.indexLevelName,
-          pm10: json.pm10IndexLevel.indexLevelName,
-          pm25: json.pm25IndexLevel.indexLevelName
+          general: json.stIndexLevel.indexLevelName ? json.stIndexLevel.indexLevelName : 'brak danych',
+          no2: json.no2IndexLevel.indexLevelName ? json.no2IndexLevel.indexLevelName : 'brak danych',
+          co: json.coIndexLevel.indexLevelName ? json.coIndexLevel.indexLevelName : 'brak danych',
+          pm10: json.pm10IndexLevel.indexLevelName ? json.pm10IndexLevel.indexLevelName : 'brak danych',
+          pm25: json.pm25IndexLevel.indexLevelName ? json.pm25IndexLevel.indexLevelName : 'brak danych'
           }
         })
       })

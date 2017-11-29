@@ -22,6 +22,7 @@ import React from 'react';
       })
       .catch(function(err) {
         console.log('parsing failed', err)
+        passedThis.setState({cityList: 'Nie można było pobra bazy miast'})
       })
       // .then(function(){
       //   for(var i = 0; i < cityList.length; i++){

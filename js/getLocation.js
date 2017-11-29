@@ -13,6 +13,6 @@ export default function locate(passedThis){
     function showPosition(position) {
       passedThis.setState({pos: {lat: position.coords.latitude, lng:position.coords.longitude}});
       countDistance(passedThis);
-      passedThis.setState({shouldShow: true})
+      passedThis.setState({popUpShow: true})
     };
 };

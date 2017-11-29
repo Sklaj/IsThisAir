@@ -19,6 +19,7 @@ import getCities from './getCities.js';
 import getData from './getData.js'
 
 import PopUp from './popup.jsx'
+import CityPick from './cityPick.jsx'
 
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -133,7 +134,9 @@ document.addEventListener('DOMContentLoaded', function(){
           cityList:{},
           inputValue:'',
           closestStation:'NaN',
-          shouldShow: false,
+          popUpShow: false,
+          selectShow: false,
+          searchResult: [],
           stationIndex:{
             general: 'Pobieranie...',
             co: 'Pobieranie...',
@@ -153,18 +156,24 @@ document.addEventListener('DOMContentLoaded', function(){
       }
 
       submitHandler = (e) => {
+        let searchResult = [];
         for(let i=0; i < this.state.cityList.length; i++){
           if(this.state.cityList[i].city){
             if(this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()){
-              console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
-              console.log('ID Miasta:' + this.state.cityList[i].city.id)
-              console.log('ID Stacji:' + this.state.cityList[i].id)
-              console.log('lat: ' + this.state.cityList[i].gegrLat)
-              console.log('lat: ' + this.state.cityList[i].gegrLon)
-            } else {
-                console.log('To nie to miasto!')
+
+              searchResult.push(this.state.cityList[i]);
+              this.setState({searchResult: searchResult})
+
+              // console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
+              // console.log('ID Miasta:' + this.state.cityList[i].city.id)
+              // console.log('ID Stacji:' + this.state.cityList[i].id)
+              // console.log('lat: ' + this.state.cityList[i].gegrLat)
+              // console.log('lat: ' + this.state.cityList[i].gegrLon)
             }
           }
+        }
+        if(this.state.searchResult.length > 0){
+          this.setState({selectShow: true})
         }
       }
 
@@ -190,12 +199,12 @@ document.addEventListener('DOMContentLoaded', function(){
 
       hidePopupHandler = (e) => {
         if(e.target.className == "overlay"){
-          this.setState({shouldShow: false});
+          this.setState({popUpShow: false});
         }
       }
 
 // Component lifecycle
-      componentDidMount(){
+      componentWillMount(){
         getCities(this);
       }
 
@@ -217,14 +226,16 @@ document.addEventListener('DOMContentLoaded', function(){
             />
             <Footer/>
             <PopUp
-              shouldShow={this.state.shouldShow}
+              shouldShow={this.state.popUpShow}
               hidePopupHandler={this.hidePopupHandler.bind(this)}
               pos={this.state.closestStation.position}
               stationId={toString(this.state.closestStation.id)}
               stationName={this.state.closestStation.name}
               stationIndex={this.state.stationIndex}
-
             />
+          <CityPick
+            shouldShow={this.state.selectShow}
+          />
           </div>
         )
       }
