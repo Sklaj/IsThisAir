@@ -5605,22 +5605,32 @@ function getData(passedThis) {
   let preLink = 'https://cors-anywhere.herokuapp.com/';
   let link = 'api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/';
   let stationId = passedThis.state.closestStation.id;
-  // let cityList;
+  let responseResult;
 
   fetch(preLink + link + stationId, mode).then(function (response) {
     return response.json();
   }).then(function (json) {
     // console.log('parsed json', json)
-    passedThis.setState({ stationIndex: {
-        general: json.stIndexLevel.indexLevelName ? json.stIndexLevel.indexLevelName : 'brak danych',
-        no2: json.no2IndexLevel.indexLevelName ? json.no2IndexLevel.indexLevelName : 'brak danych',
-        co: json.coIndexLevel.indexLevelName ? json.coIndexLevel.indexLevelName : 'brak danych',
-        pm10: json.pm10IndexLevel.indexLevelName ? json.pm10IndexLevel.indexLevelName : 'brak danych',
-        pm25: json.pm25IndexLevel.indexLevelName ? json.pm25IndexLevel.indexLevelName : 'brak danych'
-      }
-    });
+    responseResult = json;
   }).catch(function (err) {
     console.log('parsing failed', err);
+    passedThis.setState({ stationIndex: {
+        general: 'BrakDanych - Błąd Bazy',
+        no2: 'BrakDanych - Błąd Bazy',
+        co: 'BrakDanych - Błąd Bazy',
+        pm10: 'BrakDanych - Błąd Bazy',
+        pm25: 'BrakDanych - Błąd Bazy'
+      }
+    });
+  }).then(function (json) {
+    passedThis.setState({ stationIndex: {
+        general: responseResult.stIndexLevel.indexLevelName ? responseResult.stIndexLevel.indexLevelName : 'brakDanych',
+        no2: responseResult.no2IndexLevel.indexLevelName ? responseResult.no2IndexLevel.indexLevelName : 'brakDanych',
+        co: responseResult.coIndexLevel.indexLevelName ? responseResult.coIndexLevel.indexLevelName : 'brakDanych',
+        pm10: responseResult.pm10IndexLevel.indexLevelName ? responseResult.pm10IndexLevel.indexLevelName : 'brakDanych',
+        pm25: responseResult.pm25IndexLevel.indexLevelName ? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych'
+      }
+    });
   });
 };
 
@@ -14894,23 +14904,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //Importing React
 
 
-// import {
-//         Router,
-//         Route,
-//         Link,
-//         IndexLink,
-//         IndexRoute,
-//         hashHistory
-//         } from 'react-router';
 
-// //Importing components
-// import MapApp from './mapapp.jsx'
-//
 // //Importing functions
 
 
 
 
+//Importing Components
 
 
 
@@ -14927,7 +14927,7 @@ document.addEventListener('DOMContentLoaded', function () {
           { className: 'container logo' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', {
             src: 'img/logo.png',
-            alt: 'dupa'
+            alt: 'Logo'
           })
         )
       );
@@ -14964,7 +14964,7 @@ document.addEventListener('DOMContentLoaded', function () {
           { className: 'container search' },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
             type: 'text',
-            placeholder: 'wyszukaj swoje miasto',
+            placeholder: 'Wpisz nazw\u0119 miasta',
             className: 'search_input',
             onChange: this.props.changeHandler,
             onKeyPress: this.props.keyPressHandler,
@@ -14980,6 +14980,24 @@ document.addEventListener('DOMContentLoaded', function () {
           })
         )
       );
+    }
+  }
+
+  class SearchErr extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+    render() {
+      if (this.props.shouldShow === true) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'Brak miasta w bazie - spr\xF3buj wyszukac inne miasto'
+          )
+        );
+      } else {
+        return null;
+      }
     }
   }
 
@@ -15048,20 +15066,14 @@ document.addEventListener('DOMContentLoaded', function () {
         for (let i = 0; i < this.state.cityList.length; i++) {
           if (this.state.cityList[i].city) {
             if (this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()) {
-
               searchResult.push(this.state.cityList[i]);
-              this.setState({ searchResult: searchResult });
-
-              // console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
-              // console.log('ID Miasta:' + this.state.cityList[i].city.id)
-              // console.log('ID Stacji:' + this.state.cityList[i].id)
-              // console.log('lat: ' + this.state.cityList[i].gegrLat)
-              // console.log('lat: ' + this.state.cityList[i].gegrLon)
             }
           }
         }
-        if (this.state.searchResult.length > 0) {
-          this.setState({ selectShow: true });
+        if (searchResult.length > 0) {
+          this.setState({ searchResult: searchResult, selectShow: true, selectErr: false });
+        } else {
+          this.setState({ selectErr: true });
         }
       };
 
@@ -15090,6 +15102,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       };
 
+      this.hideSelectHandler = e => {
+        if (e.target.className == "overlay") {
+          this.setState({ selectShow: false });
+          this.setState({ searchResult: [] });
+        }
+      };
+
       this.state = {
         pos: {},
         cityList: {},
@@ -15097,6 +15116,7 @@ document.addEventListener('DOMContentLoaded', function () {
         closestStation: 'NaN',
         popUpShow: false,
         selectShow: false,
+        selectErr: false,
         searchResult: [],
         stationIndex: {
           general: 'Pobieranie...',
@@ -15118,6 +15138,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Rendering Main component and passing functions
     render() {
+
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
@@ -15128,6 +15149,9 @@ document.addEventListener('DOMContentLoaded', function () {
           inputValue: this.state.inputValue,
           submitHandler: this.submitHandler.bind(this),
           keyPressHandler: this.keyPressHandler.bind(this)
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchErr, {
+          shouldShow: this.state.selectErr
         }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Localize, {
           locate: this.localizationHandler.bind(this)
@@ -15142,7 +15166,9 @@ document.addEventListener('DOMContentLoaded', function () {
           stationIndex: this.state.stationIndex
         }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__cityPick_jsx__["a" /* default */], {
-          shouldShow: this.state.selectShow
+          hidePopupHandler: this.hideSelectHandler.bind(this),
+          shouldShow: this.state.selectShow,
+          searchResult: this.state.searchResult
         })
       );
     }
@@ -27160,17 +27186,19 @@ function getCities(passedThis) {
 
   let preLink = 'https://cors-anywhere.herokuapp.com/';
   let link = `api.gios.gov.pl/pjp-api/rest/station/findAll`;
-
-  // let cityList;
+  let responseResult;
+  let cityList;
 
   fetch(preLink + link, mode).then(function (response) {
     return response.json();
   }).then(function (json) {
     // console.log('parsed json', json)
-    passedThis.setState({ cityList: json });
+    cityList = json;
   }).catch(function (err) {
     console.log('parsing failed', err);
-    passedThis.setState({ cityList: 'Nie można było pobra bazy miast' });
+    passedThis.setState({ cityList: 'Nie można było pobrac bazy miast' });
+  }).then(function (json) {
+    passedThis.setState({ cityList: cityList });
   });
   // .then(function(){
   //   for(var i = 0; i < cityList.length; i++){
@@ -38948,7 +38976,7 @@ class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
       { className: '' },
-      'huj'
+      'xx'
     );
   }
 }
@@ -38958,10 +38986,29 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       'div',
-      { className: '' },
-      'dupa'
+      null,
+      this.props.searchResult.map(function (currentValue, index) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          {
+            key: currentValue.id,
+            className: 'resultBox'
+          },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            currentValue.stationName
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            currentValue.addressStreet
+          )
+        );
+      })
     );
   }
+
 }
 
 class CityPick extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
@@ -38969,10 +39016,6 @@ class CityPick extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(props) {
     super(props);
     this.state = {};
-  }
-
-  componentWillMount() {
-    this.props.shouldShow === true;
   }
 
   render() {
@@ -38993,7 +39036,8 @@ class CityPick extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PopUpHead, {
               stationId: this.props.stationId,
               stationName: this.props.stationName,
-              stationIndex: this.props.stationIndex
+              stationIndex: this.props.stationIndex,
+              searchResult: this.props.searchResult
             }),
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, {
               stationIndex: this.props.stationIndex

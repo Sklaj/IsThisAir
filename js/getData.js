@@ -10,7 +10,7 @@ import React from 'react';
     let preLink = 'https://cors-anywhere.herokuapp.com/'
     let link = 'api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/'
     let stationId = passedThis.state.closestStation.id
-    // let cityList;
+    let responseResult;
 
     fetch(preLink + link + stationId, mode)
       .then(function(response) {
@@ -18,16 +18,26 @@ import React from 'react';
       })
       .then(function(json) {
         // console.log('parsed json', json)
-        passedThis.setState({stationIndex:{
-          general: json.stIndexLevel.indexLevelName ? json.stIndexLevel.indexLevelName : 'brak danych',
-          no2: json.no2IndexLevel.indexLevelName ? json.no2IndexLevel.indexLevelName : 'brak danych',
-          co: json.coIndexLevel.indexLevelName ? json.coIndexLevel.indexLevelName : 'brak danych',
-          pm10: json.pm10IndexLevel.indexLevelName ? json.pm10IndexLevel.indexLevelName : 'brak danych',
-          pm25: json.pm25IndexLevel.indexLevelName ? json.pm25IndexLevel.indexLevelName : 'brak danych'
-          }
-        })
+        responseResult = json;
       })
       .catch(function(err) {
         console.log('parsing failed', err)
+        passedThis.setState({stationIndex:{
+          general: 'BrakDanych - Błąd Bazy',
+          no2: 'BrakDanych - Błąd Bazy',
+          co: 'BrakDanych - Błąd Bazy',
+          pm10: 'BrakDanych - Błąd Bazy',
+          pm25: 'BrakDanych - Błąd Bazy'
+          }
+        })
+      }).then(function(json){
+        passedThis.setState({stationIndex:{
+          general: responseResult.stIndexLevel.indexLevelName ? responseResult.stIndexLevel.indexLevelName : 'brakDanych',
+          no2: responseResult.no2IndexLevel.indexLevelName ? responseResult.no2IndexLevel.indexLevelName : 'brakDanych',
+          co: responseResult.coIndexLevel.indexLevelName ? responseResult.coIndexLevel.indexLevelName : 'brakDanych',
+          pm10: responseResult.pm10IndexLevel.indexLevelName ? responseResult.pm10IndexLevel.indexLevelName : 'brakDanych',
+          pm25: responseResult.pm25IndexLevel.indexLevelName? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych'
+          }
+        })
       })
   };

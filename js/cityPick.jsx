@@ -4,7 +4,7 @@ class InfoBox extends React.Component{
   render(){
     return(
       <div className=''>
-        huj
+        xx
       </div>
     )
   }
@@ -15,11 +15,22 @@ class PopUpHead extends React.Component{
 
   render(){
     return(
-      <div className=''>
-        dupa
+      <div>
+        {this.props.searchResult.map(function(currentValue, index){
+          return (
+            <div
+              key={currentValue.id}
+              className='resultBox'
+              >
+              <h2>{currentValue.stationName}</h2>
+              <h3>{currentValue.addressStreet}</h3>
+            </div>
+          );
+        })}
       </div>
     )
   }
+
 }
 
 
@@ -30,10 +41,6 @@ export default class CityPick extends React.Component{
     super(props);
     this.state = {
     }
-  }
-
-  componentWillMount(){
-    this.props.shouldShow===true;
   }
 
   render(){
@@ -51,6 +58,7 @@ export default class CityPick extends React.Component{
                   stationId={this.props.stationId}
                   stationName={this.props.stationName}
                   stationIndex={this.props.stationIndex}
+                  searchResult={this.props.searchResult}
                 />
                 <InfoBox
                   stationIndex={this.props.stationIndex}

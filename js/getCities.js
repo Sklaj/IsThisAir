@@ -7,10 +7,10 @@ import React from 'react';
                 method: 'GET',
                 };
 
-    let preLink = 'https://cors-anywhere.herokuapp.com/'
+    let preLink = 'https://cors-anywhere.herokuapp.com/';
     let link = `api.gios.gov.pl/pjp-api/rest/station/findAll`;
-
-    // let cityList;
+    let responseResult;
+    let cityList;
 
     fetch(preLink + link, mode)
       .then(function(response) {
@@ -18,11 +18,14 @@ import React from 'react';
       })
       .then(function(json) {
         // console.log('parsed json', json)
-        passedThis.setState({cityList:json})
+        cityList = json;
       })
       .catch(function(err) {
         console.log('parsing failed', err)
-        passedThis.setState({cityList: 'Nie można było pobra bazy miast'})
+        passedThis.setState({cityList: 'Nie można było pobrac bazy miast'})
+      })
+      .then(function(json){
+        passedThis.setState({cityList:cityList})
       })
       // .then(function(){
       //   for(var i = 0; i < cityList.length; i++){

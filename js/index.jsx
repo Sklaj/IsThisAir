@@ -1,23 +1,13 @@
 //Importing React
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import {
-//         Router,
-//         Route,
-//         Link,
-//         IndexLink,
-//         IndexRoute,
-//         hashHistory
-//         } from 'react-router';
 
-// //Importing components
-// import MapApp from './mapapp.jsx'
-//
 // //Importing functions
 import locate from './getLocation.js';
 import getCities from './getCities.js';
 import getData from './getData.js'
 
+//Importing Components
 import PopUp from './popup.jsx'
 import CityPick from './cityPick.jsx'
 
@@ -32,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <div className="container logo">
               <img
                 src="img/logo.png"
-                alt="dupa"
+                alt="Logo"
               />
             </div>
           </div>
@@ -63,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
             <div className="container search">
               <input
                 type="text"
-                placeholder='wyszukaj swoje miasto'
+                placeholder='Wpisz nazwę miasta'
                 className="search_input"
                 onChange={this.props.changeHandler}
                 onKeyPress={this.props.keyPressHandler}
@@ -80,6 +70,20 @@ document.addEventListener('DOMContentLoaded', function(){
             </div>
           </div>
         )
+      }
+    }
+
+    class SearchErr extends React.Component{
+      render(){
+        if(this.props.shouldShow === true){
+          return(
+            <div>
+              <h3>Brak miasta w bazie - spróbuj wyszukac inne miasto</h3>
+            </div>
+          )
+        } else {
+          return null
+        }
       }
     }
 
@@ -136,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function(){
           closestStation:'NaN',
           popUpShow: false,
           selectShow: false,
+          selectErr: false,
           searchResult: [],
           stationIndex:{
             general: 'Pobieranie...',
@@ -160,20 +165,14 @@ document.addEventListener('DOMContentLoaded', function(){
         for(let i=0; i < this.state.cityList.length; i++){
           if(this.state.cityList[i].city){
             if(this.state.inputValue.toLowerCase() === this.state.cityList[i].city.name.toLowerCase()){
-
               searchResult.push(this.state.cityList[i]);
-              this.setState({searchResult: searchResult})
-
-              // console.log('Nazwa Miasta:' + this.state.cityList[i].city.name)
-              // console.log('ID Miasta:' + this.state.cityList[i].city.id)
-              // console.log('ID Stacji:' + this.state.cityList[i].id)
-              // console.log('lat: ' + this.state.cityList[i].gegrLat)
-              // console.log('lat: ' + this.state.cityList[i].gegrLon)
             }
           }
         }
-        if(this.state.searchResult.length > 0){
-          this.setState({selectShow: true})
+        if(searchResult.length > 0){
+          this.setState({searchResult: searchResult, selectShow: true, selectErr: false})
+        } else {
+          this.setState({selectErr: true})
         }
       }
 
@@ -203,14 +202,21 @@ document.addEventListener('DOMContentLoaded', function(){
         }
       }
 
+      hideSelectHandler = (e) => {
+        if(e.target.className == "overlay"){
+          this.setState({selectShow: false});
+          this.setState({searchResult: []})
+        }
+      }
+
 // Component lifecycle
       componentWillMount(){
         getCities(this);
       }
 
-
 // Rendering Main component and passing functions
       render(){
+
         return(
           <div>
             <Logo/>
@@ -220,6 +226,9 @@ document.addEventListener('DOMContentLoaded', function(){
               inputValue={this.state.inputValue}
               submitHandler={this.submitHandler.bind(this)}
               keyPressHandler={this.keyPressHandler.bind(this)}
+            />
+            <SearchErr
+              shouldShow={this.state.selectErr}
             />
             <Localize
               locate={this.localizationHandler.bind(this)}
@@ -234,7 +243,9 @@ document.addEventListener('DOMContentLoaded', function(){
               stationIndex={this.state.stationIndex}
             />
           <CityPick
+            hidePopupHandler={this.hideSelectHandler.bind(this)}
             shouldShow={this.state.selectShow}
+            searchResult={this.state.searchResult}
           />
           </div>
         )
