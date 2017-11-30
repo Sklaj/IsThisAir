@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function(){
           popUpShow: false,
           selectShow: false,
           selectErr: false,
+          selectedStation: null,
+          stationShow: false,
           searchResult: [],
           stationIndex:{
             general: 'Pobieranie...',
@@ -148,6 +150,7 @@ document.addEventListener('DOMContentLoaded', function(){
             no2: 'Pobieranie...',
             pm10: 'Pobieranie...',
             pm25: 'Pobieranie...',
+            pm225: 'Pobieranie...'
           }
         }
       }
@@ -209,6 +212,10 @@ document.addEventListener('DOMContentLoaded', function(){
         }
       }
 
+      pickCityHandler = (e) => {
+        this.setState({selectedStation: parseInt(e.target.name), stationShow: true})
+      }
+
 // Component lifecycle
       componentWillMount(){
         getCities(this);
@@ -246,6 +253,8 @@ document.addEventListener('DOMContentLoaded', function(){
             hidePopupHandler={this.hideSelectHandler.bind(this)}
             shouldShow={this.state.selectShow}
             searchResult={this.state.searchResult}
+            pickCityHandler={this.pickCityHandler.bind(this)}
+            stationShow={this.state.stationShow}
           />
           </div>
         )

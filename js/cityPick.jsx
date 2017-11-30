@@ -13,22 +13,38 @@ class InfoBox extends React.Component{
 
 class PopUpHead extends React.Component{
 
-  render(){
-    return(
-      <div>
-        {this.props.searchResult.map(function(currentValue, index){
-          return (
-            <div
-              key={currentValue.id}
-              className='resultBox'
-              >
-              <h2>{currentValue.stationName}</h2>
-              <h3>{currentValue.addressStreet}</h3>
-            </div>
-          );
-        })}
+  generateList = (currentValue, index) => {
+    return (
+      <div
+        key={currentValue.id}
+        className='resultBox'
+        >
+        <h2>{currentValue.stationName}</h2>
+        <p>{currentValue.addressStreet}</p>
+        <button
+          type="button"
+          name={currentValue.id}
+          onClick={this.props.pickCityHandler}
+        >
+          Wybierz
+        </button>
       </div>
-    )
+    );
+  }
+
+  render(){
+    if(this.props.stationShow == false){
+      return(
+        <div>
+          <h2>Wyszukane stacje pomiarowe w wybranej lokalizacji: </h2>
+          {this.props.searchResult.map(this.generateList)}
+        </div>
+      )
+    } else {
+      return (
+        <InfoBox/>
+      )
+    }
   }
 
 }
@@ -59,10 +75,12 @@ export default class CityPick extends React.Component{
                   stationName={this.props.stationName}
                   stationIndex={this.props.stationIndex}
                   searchResult={this.props.searchResult}
+                  pickCityHandler={this.props.pickCityHandler}
+                  stationShow={this.props.stationShow}
                 />
-                <InfoBox
+                {/* <InfoBox
                   stationIndex={this.props.stationIndex}
-                />
+                /> */}
               </div>
 
               </div>

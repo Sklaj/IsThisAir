@@ -27,7 +27,8 @@ import React from 'react';
           no2: 'BrakDanych - Błąd Bazy',
           co: 'BrakDanych - Błąd Bazy',
           pm10: 'BrakDanych - Błąd Bazy',
-          pm25: 'BrakDanych - Błąd Bazy'
+          pm25: 'BrakDanych - Błąd Bazy',
+          pm225: 'BrakDanych - Błąd Bazy'
           }
         })
       }).then(function(json){
@@ -36,7 +37,8 @@ import React from 'react';
           no2: responseResult.no2IndexLevel.indexLevelName ? responseResult.no2IndexLevel.indexLevelName : 'brakDanych',
           co: responseResult.coIndexLevel.indexLevelName ? responseResult.coIndexLevel.indexLevelName : 'brakDanych',
           pm10: responseResult.pm10IndexLevel.indexLevelName ? responseResult.pm10IndexLevel.indexLevelName : 'brakDanych',
-          pm25: responseResult.pm25IndexLevel.indexLevelName? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych'
+          pm25: responseResult.pm25IndexLevel.indexLevelName? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych',
+          // pm225: responseResult.pm225IndexLevel.indexLevelName? responseResult.pm225IndexLevel.indexLevelName : 'brakDanych'
           }
         })
       })

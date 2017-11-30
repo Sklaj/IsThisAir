@@ -5619,7 +5619,8 @@ function getData(passedThis) {
         no2: 'BrakDanych - Błąd Bazy',
         co: 'BrakDanych - Błąd Bazy',
         pm10: 'BrakDanych - Błąd Bazy',
-        pm25: 'BrakDanych - Błąd Bazy'
+        pm25: 'BrakDanych - Błąd Bazy',
+        pm225: 'BrakDanych - Błąd Bazy'
       }
     });
   }).then(function (json) {
@@ -5629,6 +5630,7 @@ function getData(passedThis) {
         co: responseResult.coIndexLevel.indexLevelName ? responseResult.coIndexLevel.indexLevelName : 'brakDanych',
         pm10: responseResult.pm10IndexLevel.indexLevelName ? responseResult.pm10IndexLevel.indexLevelName : 'brakDanych',
         pm25: responseResult.pm25IndexLevel.indexLevelName ? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych'
+        // pm225: responseResult.pm225IndexLevel.indexLevelName? responseResult.pm225IndexLevel.indexLevelName : 'brakDanych'
       }
     });
   });
@@ -15109,6 +15111,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       };
 
+      this.pickCityHandler = e => {
+        this.setState({ selectedStation: parseInt(e.target.name), stationShow: true });
+      };
+
       this.state = {
         pos: {},
         cityList: {},
@@ -15117,13 +15123,16 @@ document.addEventListener('DOMContentLoaded', function () {
         popUpShow: false,
         selectShow: false,
         selectErr: false,
+        selectedStation: null,
+        stationShow: false,
         searchResult: [],
         stationIndex: {
           general: 'Pobieranie...',
           co: 'Pobieranie...',
           no2: 'Pobieranie...',
           pm10: 'Pobieranie...',
-          pm25: 'Pobieranie...'
+          pm25: 'Pobieranie...',
+          pm225: 'Pobieranie...'
         }
       };
     }
@@ -15168,7 +15177,9 @@ document.addEventListener('DOMContentLoaded', function () {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__cityPick_jsx__["a" /* default */], {
           hidePopupHandler: this.hideSelectHandler.bind(this),
           shouldShow: this.state.selectShow,
-          searchResult: this.state.searchResult
+          searchResult: this.state.searchResult,
+          pickCityHandler: this.pickCityHandler.bind(this),
+          stationShow: this.state.stationShow
         })
       );
     }
@@ -38982,31 +38993,54 @@ class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 }
 
 class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+  constructor(...args) {
+    var _temp;
+
+    return _temp = super(...args), this.generateList = (currentValue, index) => {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        {
+          key: currentValue.id,
+          className: 'resultBox'
+        },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          currentValue.stationName
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'p',
+          null,
+          currentValue.addressStreet
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'button',
+          {
+            type: 'button',
+            name: currentValue.id,
+            onClick: this.props.pickCityHandler
+          },
+          'Wybierz'
+        )
+      );
+    }, _temp;
+  }
 
   render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      null,
-      this.props.searchResult.map(function (currentValue, index) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          {
-            key: currentValue.id,
-            className: 'resultBox'
-          },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'h2',
-            null,
-            currentValue.stationName
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'h3',
-            null,
-            currentValue.addressStreet
-          )
-        );
-      })
-    );
+    if (this.props.stationShow == false) {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h2',
+          null,
+          'Wyszukane stacje pomiarowe w wybranej lokalizacji: '
+        ),
+        this.props.searchResult.map(this.generateList)
+      );
+    } else {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, null);
+    }
   }
 
 }
@@ -39037,10 +39071,9 @@ class CityPick extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
               stationId: this.props.stationId,
               stationName: this.props.stationName,
               stationIndex: this.props.stationIndex,
-              searchResult: this.props.searchResult
-            }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, {
-              stationIndex: this.props.stationIndex
+              searchResult: this.props.searchResult,
+              pickCityHandler: this.props.pickCityHandler,
+              stationShow: this.props.stationShow
             })
           )
         )
