@@ -1,26 +1,17 @@
 import React from 'react';
 
-class InfoBox extends React.Component{
-  render(){
-    return(
-      <div className=''>
-        xx
-      </div>
-    )
-  }
-}
-
-
-class PopUpHead extends React.Component{
+class Select extends React.Component{
 
   generateList = (currentValue, index) => {
     return (
       <div
         key={currentValue.id}
-        className='resultBox'
-        >
-        <h2>{currentValue.stationName}</h2>
-        <p>{currentValue.addressStreet}</p>
+        className='select'
+      >
+        <div className='textbox'>
+          <h2>{currentValue.stationName}</h2>
+          <p>{currentValue.addressStreet}</p>
+        </div>
         <button
           type="button"
           name={currentValue.id}
@@ -42,14 +33,12 @@ class PopUpHead extends React.Component{
     if(this.props.selectShow == true){
       return(
         <div>
-          <h2>Wyszukane stacje pomiarowe w wybranej lokalizacji: </h2>
+          <h2>Wyszukane stacje pomiarowe w wybranej lokalizacji:</h2>
           {this.props.searchResult.map(this.generateList)}
         </div>
       )
     } else {
-      return (
-        <InfoBox/>
-      )
+      return null
     }
   }
 
@@ -59,24 +48,12 @@ class PopUpHead extends React.Component{
 
 export default class CityPick extends React.Component{
 
-  constructor(props){
-    super(props);
-    this.state = {
-    }
-  }
-
-
-    // if(this.props.selectedStation.id !== null){
-    //   this.props.getDataHandler
-    // }
-
-
   render(){
     if(this.props.selectShow === true){
       return(
-        <div className="popup">
-          <div className="popUpBody">
-            <PopUpHead
+        <div className="selectPopUp">
+          <div className="selectPopUpBody">
+            <Select
               stationId={this.props.stationId}
               stationName={this.props.stationName}
               stationIndex={this.props.stationIndex}

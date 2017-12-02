@@ -4,6 +4,8 @@ body{
   font-size: 14px;
   font-family: 'Lato', sans-serif;
   background-image: url('../img/bg.jpg');
+  background-repeat: no-repeat;
+
 }
 
 /*General Wrapper styling plus fadein effect*/
@@ -30,7 +32,7 @@ body{
 }
 
 .row{
-  margin-top: 1.5em;
+  margin-top: 1em;
 }
 
 
@@ -50,6 +52,7 @@ body{
 .heading h1{
   font-size: 3em;
   font-weight: 300;
+  margin-top: 0;
   margin-bottom: -0.2em;
 }
 
@@ -79,9 +82,13 @@ body{
   border: 0;
   padding: 0;
   border-radius: 5px;
-  background-color: #ff530d;
+  background-color: #E74C3C;
   color: white;
   cursor: pointer;
+}
+
+.searchErr{
+  color:  yellow;
 }
 
 /*Locaclization styling*/
@@ -98,7 +105,7 @@ body{
   border: 0;
   padding: 0;
   border-radius: 5px;
-  background-color: #ff530d;
+  background-color: #E74C3C;
   color: white;
   cursor: pointer;
 }
@@ -141,7 +148,10 @@ footer{
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, 0.4);
+  background-size: cover;
   animation: fadein2 1s;
 }
 
@@ -150,6 +160,7 @@ footer{
   100% { opacity: 1; }
 }
 
+/*Show Data styling*/
 .popup{
   height: 70vh;
   width: 80vw;
@@ -197,6 +208,73 @@ footer{
   width: 30%
 }
 
+/*Select Styling*/
+
+.selectPopUp{
+  position: relative;
+  width: 40vw;
+  margin: 0 auto;
+  margin-top: 2%;
+  background: white;
+  animation: slide 1s;
+  overflow-y: auto;
+  min-height: 30vh;
+  max-height: 95vh;
+}
+
+.selectPopUpBody{
+  display: inline-block;
+  max-width: 100%;
+  padding: 20px;
+}
+
+.select{
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 60px;
+  max-height: 80px;
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #d2d2d2;
+}
+
+.select:hover{
+  background-color: #acacac;
+  animation: backgroundHoover 1s;
+}
+
+@keyframes backgroundHoover {
+    0%    {   background-color: #d2d2d2; }
+    100% { background-color: #acacac; }
+}
+
+.select .textbox{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 80%;
+  float: left;
+}
+
+.select button{
+  display: inline-block;
+  box-sizing: border-box;
+  float: left;
+  margin-top: 5px;
+  height: 30px;
+  width: 20%;
+  border: 0;
+  padding: 0;
+  border-radius: 5px;
+  background-color: #E74C3C;
+  color: white;
+  cursor: pointer;
+}
+
+.select h2,p{
+  margin: 0;
+  font-size: 1em;
+  text-align: left;
+}
 
 
 

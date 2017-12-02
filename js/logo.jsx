@@ -6,7 +6,7 @@ export default class Logo extends React.Component{
       <div className="row">
         <div className="container logo">
           <img
-            src="img/logo.png"
+            src="img/logo1.png"
             alt="Logo"
           />
         </div>

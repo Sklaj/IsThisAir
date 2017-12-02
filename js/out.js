@@ -27207,7 +27207,7 @@ class SearchErr extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
     if (this.props.shouldShow === true) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        null,
+        { className: 'searchErr' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'h3',
           null,
@@ -39055,17 +39055,7 @@ var updaterMap = {}
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 
 
-class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-  render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      { className: '' },
-      'xx'
-    );
-  }
-}
-
-class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
+class Select extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
   constructor(...args) {
     var _temp;
 
@@ -39074,17 +39064,21 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
         'div',
         {
           key: currentValue.id,
-          className: 'resultBox'
+          className: 'select'
         },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h2',
-          null,
-          currentValue.stationName
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          currentValue.addressStreet
+          'div',
+          { className: 'textbox' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            currentValue.stationName
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'p',
+            null,
+            currentValue.addressStreet
+          )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'button',
@@ -39111,12 +39105,12 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'h2',
           null,
-          'Wyszukane stacje pomiarowe w wybranej lokalizacji: '
+          'Wyszukane stacje pomiarowe w wybranej lokalizacji:'
         ),
         this.props.searchResult.map(this.generateList)
       );
     } else {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, null);
+      return null;
     }
   }
 
@@ -39124,25 +39118,15 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
 
 class CityPick extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  // if(this.props.selectedStation.id !== null){
-  //   this.props.getDataHandler
-  // }
-
-
   render() {
     if (this.props.selectShow === true) {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: 'popup' },
+        { className: 'selectPopUp' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
-          { className: 'popUpBody' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PopUpHead, {
+          { className: 'selectPopUpBody' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Select, {
             stationId: this.props.stationId,
             stationName: this.props.stationName,
             stationIndex: this.props.stationIndex,
@@ -39178,7 +39162,7 @@ class Logo extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         "div",
         { className: "container logo" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", {
-          src: "img/logo.png",
+          src: "img/logo1.png",
           alt: "Logo"
         })
       )
