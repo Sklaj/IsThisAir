@@ -21,10 +21,12 @@ export default class PopUp extends React.Component{
             />
             <CityPick
               // hidePopupHandler={this.hideSelectHandler}
+              // getDataHandler={this.props.getDataHandler}
               selectShow={this.props.selectShow}
               searchResult={this.props.searchResult}
               pickCityHandler={this.props.pickCityHandler}
               stationShow={this.props.stationShow}
+              // selectedStation={this.props.selectedStation}
             />
         </div>
       )

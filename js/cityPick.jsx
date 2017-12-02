@@ -36,7 +36,7 @@ class PopUpHead extends React.Component{
     );
   }
 
-  
+
 
   render(){
     if(this.props.selectShow == true){
@@ -64,6 +64,12 @@ export default class CityPick extends React.Component{
     this.state = {
     }
   }
+
+
+    // if(this.props.selectedStation.id !== null){
+    //   this.props.getDataHandler
+    // }
+
 
   render(){
     if(this.props.selectShow === true){

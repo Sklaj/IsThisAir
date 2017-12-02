@@ -126,27 +126,38 @@ document.addEventListener('DOMContentLoaded', function(){
       }
 
       pickCityHandler = (e) => {
+        
+        new Promise((res,rej)=>{
 
-        let id = parseInt(e.target.name)
-        let station = {};
+          let id = parseInt(e.target.name);
+          this.setState({selectedStation: {id: id}})
+          let station = {};
 
-        for(let i = 0; i < this.state.cityList.length; i++){
-          if(this.state.cityList[i].id === id){
-            console.log(this.state.cityList[i])
-            station = {
-              dist: null,
-              id: this.state.cityList[i].id,
-              info: this.state.cityList[i],
-              position: {
-                lat: Number(this.state.cityList[i].gegrLat),
-                lng: Number(this.state.cityList[i].gegrLon)
+          for(let i = 0; i < this.state.cityList.length; i++){
+            if(this.state.cityList[i].id === id){
+              console.log('dupa')
+              station = {
+                dist: null,
+                id: this.state.cityList[i].id,
+                info: this.state.cityList[i],
+                position: {
+                  lat: Number(this.state.cityList[i].gegrLat),
+                  lng: Number(this.state.cityList[i].gegrLon)
+                }
               }
+              res(station)
             }
           }
-        }
-        this.setState({selectedStation: station})
-        this.setState({popUpShow: true, selectShow: false, dataShow: true})
-        getData(this)
+        }).then((res)=>{
+          return this.setState({selectedStation: res});
+        })
+        .then((res)=>{
+          return getData(this)
+        })
+        .then((res)=>{
+          return this.setState({popUpShow: true, selectShow: false, dataShow: true});
+        })
+
       }
 
 // Component lifecycle
@@ -180,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function(){
               hidePopupHandler={this.hidePopupHandler.bind(this)}
               dataShow={this.state.dataShow}
               selectShow={this.state.selectShow}
+              // getDataHandler={this.getDataHandler.bind(this)}
 
               //props for CityData
               pos={this.state.selectedStation.position}
@@ -190,6 +202,7 @@ document.addEventListener('DOMContentLoaded', function(){
               //props for CityPick
               searchResult={this.state.searchResult}
               pickCityHandler={this.pickCityHandler.bind(this)}
+              // selectedStation={this.state.selectedStation}
             />
 
           </div>
