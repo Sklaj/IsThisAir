@@ -2,9 +2,8 @@ import React from 'react';
 //Geolocation
 
 import countDistance from './countDistance.js'
-import getData from './getData.js'
 
-export default function locate(passedThis){
+export default function getLocation (passedThis){
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(showPosition);
     } else {

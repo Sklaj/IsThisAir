@@ -3,130 +3,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // //Importing functions
-import locate from './getLocation.js';
+import getLocation from './getLocation.js';
 import getCities from './getCities.js';
 import getData from './getData.js'
 
-//Importing Components
+//Importing Big Components
+// import PopUp from './popup.jsx'
+// import CityPick from './cityPick.jsx'
+
+// Importing important Components
+import Search from './search.jsx'
+import SearchErr from './searchErr.jsx'
+import Localize from './localize.jsx'
 import PopUp from './popup.jsx'
-import CityPick from './cityPick.jsx'
+
+// Importing small components
+import Logo from './logo.jsx'
+import Heading from './heading.jsx'
+import Footer from './footer.jsx'
+
 
 
 document.addEventListener('DOMContentLoaded', function(){
-
-// Top static elements
-    class Logo extends React.Component{
-      render(){
-        return(
-          <div className="row">
-            <div className="container logo">
-              <img
-                src="img/logo.png"
-                alt="Logo"
-              />
-            </div>
-          </div>
-        )
-      }
-    }
-
-
-    class Heading extends React.Component{
-      render(){
-        return(
-          <div className="row">
-            <div className="container heading">
-              <h1>Wyszukaj miasto:</h1>
-            </div>
-          </div>
-        )
-      }
-    }
-
-
-// Search element
-    class Search extends React.Component{
-
-      render(){
-        return(
-          <div className="row">
-            <div className="container search">
-              <input
-                type="text"
-                placeholder='Wpisz nazwę miasta'
-                className="search_input"
-                onChange={this.props.changeHandler}
-                onKeyPress={this.props.keyPressHandler}
-                name='Dupa'
-                value={this.props.inputValue}
-              />
-              <input
-                type="submit"
-                name=""
-                value="Szukaj"
-                className="search_submit"
-                onClick={this.props.submitHandler}
-              />
-            </div>
-          </div>
-        )
-      }
-    }
-
-    class SearchErr extends React.Component{
-      render(){
-        if(this.props.shouldShow === true){
-          return(
-            <div>
-              <h3>Brak miasta w bazie - spróbuj wyszukac inne miasto</h3>
-            </div>
-          )
-        } else {
-          return null
-        }
-      }
-    }
-
-
-//Localize element
-    class Localize extends React.Component{
-
-      render(){
-        return(
-          <div className="row localize_row">
-            <div className="container localize">
-              <p>
-                Lub zlokalizuj się akutomatycznie
-              </p>
-              <button
-                type="button"
-                name="button"
-                onClick={this.props.locate}
-              >
-                Zlokalizuj mnie
-              </button>
-            </div>
-          </div>
-        )
-      }
-    }
-
-
-// Static footer element
-    class Footer extends React.Component{
-      render(){
-        return(
-          <div className="row">
-            <div className="container footer">
-              <footer>
-                  Aplikacja dziala tylko na terenie polski ©Piotrek Chodkowski
-              </footer>
-            </div>
-          </div>
-        )
-      }
-    }
-
 
 // Main component - all functionality here
     class Home extends React.Component{
@@ -134,15 +32,26 @@ document.addEventListener('DOMContentLoaded', function(){
       constructor(props){
         super(props);
         this.state = {
-          pos:{},
+          //Base state elements
           cityList:{},
           inputValue:'',
-          closestStation:'NaN',
+          pos:{},
+          //Should show elements
           popUpShow: false,
+          dataShow: false,
           selectShow: false,
           selectErr: false,
-          selectedStation: null,
-          stationShow: false,
+          //Info state
+          closestStation:'NaN',
+          selectedStation: {
+            dist: null,
+            id: null,
+            info: null,
+            position: {
+              lat: null,
+              lng: null
+            }
+          },
           searchResult: [],
           stationIndex:{
             general: 'Pobieranie...',
@@ -173,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function(){
           }
         }
         if(searchResult.length > 0){
-          this.setState({searchResult: searchResult, selectShow: true, selectErr: false})
+          this.setState({searchResult: searchResult, popUpShow: true, selectShow: true, selectErr: false})
         } else {
           this.setState({selectErr: true})
         }
@@ -185,9 +94,9 @@ document.addEventListener('DOMContentLoaded', function(){
       }
 
       closestPoint = () => {
-        if(this.state.closestStation.dist){
+        if(this.state.selectedStation.dist){
           for(let i = 0; i < this.state.cityList.length; i++){
-            if (this.state.cityList[i].id === this.state.closestStation.id){
+            if (this.state.cityList[i].id === this.state.selectedStation.id){
               console.log(this.state.cityList[i])
             }
           }
@@ -195,32 +104,56 @@ document.addEventListener('DOMContentLoaded', function(){
       }
 
       localizationHandler = () => {
-        locate(this);
-      }
 
+        getLocation(this);
+        this.setState({dataShow: true})
+      }
 
       hidePopupHandler = (e) => {
         if(e.target.className == "overlay"){
-          this.setState({popUpShow: false});
-        }
-      }
-
-      hideSelectHandler = (e) => {
-        if(e.target.className == "overlay"){
-          this.setState({selectShow: false});
-          this.setState({searchResult: []})
+          this.setState({selectShow: false, dataShow: false, popUpShow: false});
+          this.setState({searchResult: []});
+          this.setState({
+            stationIndex:{
+              general: 'Pobieranie...',
+              co: 'Pobieranie...',
+              no2: 'Pobieranie...',
+              pm10: 'Pobieranie...',
+              pm25: 'Pobieranie...',
+              pm225: 'Pobieranie...'
+            }})
         }
       }
 
       pickCityHandler = (e) => {
-        this.setState({selectedStation: parseInt(e.target.name), stationShow: true})
+
+        let id = parseInt(e.target.name)
+        let station = {};
+
+        for(let i = 0; i < this.state.cityList.length; i++){
+          if(this.state.cityList[i].id === id){
+            console.log(this.state.cityList[i])
+            station = {
+              dist: null,
+              id: this.state.cityList[i].id,
+              info: this.state.cityList[i],
+              position: {
+                lat: Number(this.state.cityList[i].gegrLat),
+                lng: Number(this.state.cityList[i].gegrLon)
+              }
+            }
+          }
+        }
+        this.setState({selectedStation: station})
+        this.setState({popUpShow: true, selectShow: false, dataShow: true})
+        getData(this)
       }
 
 // Component lifecycle
       componentWillMount(){
         getCities(this);
       }
-
+//
 // Rendering Main component and passing functions
       render(){
 
@@ -242,20 +175,23 @@ document.addEventListener('DOMContentLoaded', function(){
             />
             <Footer/>
             <PopUp
-              shouldShow={this.state.popUpShow}
+              //General props for popup
+              popUpShow={this.state.popUpShow}
               hidePopupHandler={this.hidePopupHandler.bind(this)}
-              pos={this.state.closestStation.position}
-              stationId={toString(this.state.closestStation.id)}
-              stationName={this.state.closestStation.name}
+              dataShow={this.state.dataShow}
+              selectShow={this.state.selectShow}
+
+              //props for CityData
+              pos={this.state.selectedStation.position}
+              stationId={toString(this.state.selectedStation.id)}
+              stationName={this.state.selectedStation.info}
               stationIndex={this.state.stationIndex}
+
+              //props for CityPick
+              searchResult={this.state.searchResult}
+              pickCityHandler={this.pickCityHandler.bind(this)}
             />
-          <CityPick
-            hidePopupHandler={this.hideSelectHandler.bind(this)}
-            shouldShow={this.state.selectShow}
-            searchResult={this.state.searchResult}
-            pickCityHandler={this.pickCityHandler.bind(this)}
-            stationShow={this.state.stationShow}
-          />
+
           </div>
         )
       }

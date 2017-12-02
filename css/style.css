@@ -35,8 +35,13 @@ body{
 
 
 /*Logo styling*/
+
+.logo {
+  padding: 25px;
+}
+
 .logo img{
-  padding: 1em;
+  padding: 0.5em;
   max-width: 100%;
 }
 

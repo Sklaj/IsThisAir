@@ -9,7 +9,7 @@ import React from 'react';
 
     let preLink = 'https://cors-anywhere.herokuapp.com/'
     let link = 'api.gios.gov.pl/pjp-api/rest/aqindex/getIndex/'
-    let stationId = passedThis.state.closestStation.id
+    let stationId = passedThis.state.selectedStation.id
     let responseResult;
 
     fetch(preLink + link + stationId, mode)
@@ -33,12 +33,11 @@ import React from 'react';
         })
       }).then(function(json){
         passedThis.setState({stationIndex:{
-          general: responseResult.stIndexLevel.indexLevelName ? responseResult.stIndexLevel.indexLevelName : 'brakDanych',
-          no2: responseResult.no2IndexLevel.indexLevelName ? responseResult.no2IndexLevel.indexLevelName : 'brakDanych',
-          co: responseResult.coIndexLevel.indexLevelName ? responseResult.coIndexLevel.indexLevelName : 'brakDanych',
-          pm10: responseResult.pm10IndexLevel.indexLevelName ? responseResult.pm10IndexLevel.indexLevelName : 'brakDanych',
-          pm25: responseResult.pm25IndexLevel.indexLevelName? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych',
-          // pm225: responseResult.pm225IndexLevel.indexLevelName? responseResult.pm225IndexLevel.indexLevelName : 'brakDanych'
+          general: responseResult.stIndexLevel ? responseResult.stIndexLevel.indexLevelName : 'brakDanych',
+          no2: responseResult.no2IndexLevel ? responseResult.no2IndexLevel.indexLevelName : 'brakDanych',
+          co: responseResult.coIndexLevel ? responseResult.coIndexLevel.indexLevelName : 'brakDanych',
+          pm10: responseResult.pm10IndexLevel ? responseResult.pm10IndexLevel.indexLevelName : 'brakDanych',
+          pm25: responseResult.pm25IndexLevel ? responseResult.pm25IndexLevel.indexLevelName : 'brakDanych',
           }
         })
       })
