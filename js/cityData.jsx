@@ -11,47 +11,51 @@ const {
 
 let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
-class InfoBox extends React.Component{
-  render(){
-    return(
-      <div className='infoBox'>
-        <div className="info">
-          <h2>NO2</h2>
-          <p>{this.props.stationIndex.no2}</p>
-        </div>
-        <div className="info">
-          <h2>CO</h2>
-          <p>{this.props.stationIndex.co}</p>
-        </div>
-        <div className="info">
-          <h2>Pyły PM10</h2>
-          <p>{this.props.stationIndex.pm10}</p>
-        </div>
-        <div className="info">
-          <h2>Pyły PM2,5</h2>
-          <p>{this.props.stationIndex.pm25}</p>
-        </div>
-      </div>
-    )
-  }
-}
-
-
 class PopUpHead extends React.Component{
 
   render(){
     return(
       <div className='popup_head'>
-        <h1>{"Miasto: " + this.props.stationName.city.name}</h1>
-        <h2>{this.props.stationName.addressStreet}</h2>
-        <div
-          className="status"
-        >
+        <div className='cityName'>
+          <h3>Miasto:</h3>
+          <h1>
+            {this.props.stationName.city.name}
+          </h1>
+        </div>
+        <div className='cityAdres'>
+          <h3>Adres:</h3>
+          <h1>{this.props.stationName.addressStreet}</h1>
+        </div>
+        <div className="status">
           <h3>
             Aktualny status jakości powietrza w obrębie wybranej stacji pomiarowej:
           </h3>
           <h1>{this.props.stationIndex.general}</h1>
         </div>
+        <div className='infoBox'>
+          <div className="info">
+            <h3>NO2:</h3>
+            <h2>{this.props.stationIndex.no2}</h2>
+          </div>
+          <div className="info">
+            <h3>CO:</h3>
+            <h2>{this.props.stationIndex.co}</h2>
+          </div>
+          <div className="info">
+            <h3>Pyły PM10:</h3>
+            <h2>{this.props.stationIndex.pm10}</h2>
+          </div>
+          <div className="info">
+            <h3>Pyły PM2,5:</h3>
+            <h2>{this.props.stationIndex.pm25}</h2>
+          </div>
+        </div>
+        <button
+          className='closeBtn'
+          onClick={this.props.closeBtnHandler}
+        >
+          Zamknij
+        </button>
       </div>
     )
   }
@@ -78,15 +82,11 @@ export default class CityData extends React.Component{
           <div className="popup">
             <div className="popUpBody">
               <PopUpHead
-                // showData={this.porps.showData}
                 stationId={this.props.stationId}
                 stationName={this.props.stationName}
                 stationIndex={this.props.stationIndex}
-                // stationAdress={this.props.stationAdress}
-
-              />
-              <InfoBox
                 stationIndex={this.props.stationIndex}
+                closeBtnHandler={this.props.closeBtnHandler}
               />
             </div>
             <MapWithAMarker

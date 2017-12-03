@@ -125,8 +125,24 @@ document.addEventListener('DOMContentLoaded', function(){
         }
       }
 
+      closeBtnHandler= (e) => {
+        if(e.target.className == "closeBtn"){
+          this.setState({selectShow: false, dataShow: false, popUpShow: false});
+          this.setState({searchResult: []});
+          this.setState({
+            stationIndex:{
+              general: 'Pobieranie...',
+              co: 'Pobieranie...',
+              no2: 'Pobieranie...',
+              pm10: 'Pobieranie...',
+              pm25: 'Pobieranie...',
+              pm225: 'Pobieranie...'
+            }})
+        }
+      }
+
       pickCityHandler = (e) => {
-        
+
         new Promise((res,rej)=>{
 
           let id = parseInt(e.target.name);
@@ -189,6 +205,7 @@ document.addEventListener('DOMContentLoaded', function(){
               //General props for popup
               popUpShow={this.state.popUpShow}
               hidePopupHandler={this.hidePopupHandler.bind(this)}
+              closeBtnHandler={this.closeBtnHandler.bind(this)}
               dataShow={this.state.dataShow}
               selectShow={this.state.selectShow}
               // getDataHandler={this.getDataHandler.bind(this)}

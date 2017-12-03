@@ -13,20 +13,18 @@ export default class PopUp extends React.Component{
           >
             <CityData
               dataShow={this.props.dataShow}
-              // hidePopupHandler={this.props.hidePopupHandler}
               pos={this.props.pos}
               stationId={this.props.stationId}
               stationName={this.props.stationName}
               stationIndex={this.props.stationIndex}
+              closeBtnHandler={this.props.closeBtnHandler}
             />
             <CityPick
-              // hidePopupHandler={this.hideSelectHandler}
-              // getDataHandler={this.props.getDataHandler}
+              closeBtnHandler={this.props.closeBtnHandler}
               selectShow={this.props.selectShow}
               searchResult={this.props.searchResult}
               pickCityHandler={this.props.pickCityHandler}
               stationShow={this.props.stationShow}
-              // selectedStation={this.props.selectedStation}
             />
         </div>
       )

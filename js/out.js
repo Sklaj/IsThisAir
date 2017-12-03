@@ -14998,6 +14998,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       };
 
+      this.closeBtnHandler = e => {
+        if (e.target.className == "closeBtn") {
+          this.setState({ selectShow: false, dataShow: false, popUpShow: false });
+          this.setState({ searchResult: [] });
+          this.setState({
+            stationIndex: {
+              general: 'Pobieranie...',
+              co: 'Pobieranie...',
+              no2: 'Pobieranie...',
+              pm10: 'Pobieranie...',
+              pm25: 'Pobieranie...',
+              pm225: 'Pobieranie...'
+            } });
+        }
+      };
+
       this.pickCityHandler = e => {
 
         new Promise((res, rej) => {
@@ -15096,6 +15112,7 @@ document.addEventListener('DOMContentLoaded', function () {
         //General props for popup
         , { popUpShow: this.state.popUpShow,
           hidePopupHandler: this.hidePopupHandler.bind(this),
+          closeBtnHandler: this.closeBtnHandler.bind(this),
           dataShow: this.state.dataShow,
           selectShow: this.state.selectShow
           // getDataHandler={this.getDataHandler.bind(this)}
@@ -27285,21 +27302,19 @@ class PopUp extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
           onClick: this.props.hidePopupHandler
         },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__cityData_jsx__["a" /* default */], {
-          dataShow: this.props.dataShow
-          // hidePopupHandler={this.props.hidePopupHandler}
-          , pos: this.props.pos,
+          dataShow: this.props.dataShow,
+          pos: this.props.pos,
           stationId: this.props.stationId,
           stationName: this.props.stationName,
-          stationIndex: this.props.stationIndex
+          stationIndex: this.props.stationIndex,
+          closeBtnHandler: this.props.closeBtnHandler
         }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__cityPick_jsx__["a" /* default */]
-        // hidePopupHandler={this.hideSelectHandler}
-        // getDataHandler={this.props.getDataHandler}
-        , { selectShow: this.props.selectShow,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__cityPick_jsx__["a" /* default */], {
+          closeBtnHandler: this.props.closeBtnHandler,
+          selectShow: this.props.selectShow,
           searchResult: this.props.searchResult,
           pickCityHandler: this.props.pickCityHandler,
           stationShow: this.props.stationShow
-          // selectedStation={this.props.selectedStation}
         })
       );
     } else {
@@ -27331,71 +27346,6 @@ const {
 
 let googleApiKey = "AIzaSyDqfIQDoXTC1HNbgm9xtEsIxpsokMbuotM";
 
-class InfoBox extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
-  render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      'div',
-      { className: 'infoBox' },
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'info' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h2',
-          null,
-          'NO2'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          this.props.stationIndex.no2
-        )
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'info' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h2',
-          null,
-          'CO'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          this.props.stationIndex.co
-        )
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'info' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h2',
-          null,
-          'Py\u0142y PM10'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          this.props.stationIndex.pm10
-        )
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'info' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'h2',
-          null,
-          'Py\u0142y PM2,5'
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'p',
-          null,
-          this.props.stationIndex.pm25
-        )
-      )
-    );
-  }
-}
-
 class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
 
   render() {
@@ -27403,20 +27353,36 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
       'div',
       { className: 'popup_head' },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h1',
-        null,
-        "Miasto: " + this.props.stationName.city.name
-      ),
-      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'h2',
-        null,
-        this.props.stationName.addressStreet
+        'div',
+        { className: 'cityName' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h3',
+          null,
+          'Miasto:'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h1',
+          null,
+          this.props.stationName.city.name
+        )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        {
-          className: 'status'
-        },
+        { className: 'cityAdres' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h3',
+          null,
+          'Adres:'
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'h1',
+          null,
+          this.props.stationName.addressStreet
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'status' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'h3',
           null,
@@ -27427,6 +27393,74 @@ class PopUpHead extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component 
           null,
           this.props.stationIndex.general
         )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'infoBox' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'info' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'NO2:'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            this.props.stationIndex.no2
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'info' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'CO:'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            this.props.stationIndex.co
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'info' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'Py\u0142y PM10:'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            this.props.stationIndex.pm10
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'info' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h3',
+            null,
+            'Py\u0142y PM2,5:'
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'h2',
+            null,
+            this.props.stationIndex.pm25
+          )
+        )
+      ),
+      __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'button',
+        {
+          className: 'closeBtn',
+          onClick: this.props.closeBtnHandler
+        },
+        'Zamknij'
       )
     );
   }
@@ -27452,16 +27486,12 @@ class CityData extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'popUpBody' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PopUpHead
-          // showData={this.porps.showData}
-          , { stationId: this.props.stationId,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PopUpHead, {
+            stationId: this.props.stationId,
             stationName: this.props.stationName,
-            stationIndex: this.props.stationIndex
-            // stationAdress={this.props.stationAdress}
-
-          }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(InfoBox, {
-            stationIndex: this.props.stationIndex
+            stationIndex: this.props.stationIndex,
+            stationIndex: this.props.stationIndex,
+            closeBtnHandler: this.props.closeBtnHandler
           })
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MapWithAMarker, {
@@ -39133,7 +39163,15 @@ class CityPick extends __WEBPACK_IMPORTED_MODULE_0_react___default.a.Component {
             searchResult: this.props.searchResult,
             pickCityHandler: this.props.pickCityHandler,
             selectShow: this.props.selectShow
-          })
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'button',
+            {
+              className: 'closeBtn',
+              onClick: this.props.closeBtnHandler
+            },
+            'Zamknij'
+          )
         )
       );
     } else {

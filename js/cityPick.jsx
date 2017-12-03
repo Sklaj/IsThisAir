@@ -61,7 +61,12 @@ export default class CityPick extends React.Component{
               pickCityHandler={this.props.pickCityHandler}
               selectShow={this.props.selectShow}
             />
-
+            <button
+              className='closeBtn'
+              onClick={this.props.closeBtnHandler}
+            >
+              Zamknij
+            </button>
           </div>
         </div>
       )
