@@ -1,6 +1,6 @@
 # IsThisAir
 
-Open API with air quality information provided by GIOŚ
+Open API with air quality information provided by GIOŚ <br>
 http://powietrze.gios.gov.pl/pjp/content/api#
 
 For development:
